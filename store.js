@@ -11,13 +11,13 @@ const initialState = {
 }
 
 export const actionTypes = {
-  UPDATE_ISA_VARIABLES: 'CHANGE_START_DATE',
+  UPDATE_FORM: 'UPDATE_FORM',
 }
 
 // REDUCERS
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.UPDATE_ISA_VARIABLES:
+    case actionTypes.UPDATE_FORM:
       return Object.assign({}, state, {
         startDate: action.startDate,
         exitDate: action.exitDate,
@@ -30,7 +30,7 @@ export const reducer = (state = initialState, action) => {
 }
 
 // ACTIONS
-export const updateISAVariables = ({
+export const updateForm = ({
   startDate,
   exitDate,
   stipendAmount,
@@ -38,7 +38,7 @@ export const updateISAVariables = ({
   expectedAnnualSalary,
 }) => dispatch => {
   return dispatch({
-    type: actionTypes.UPDATE_ISA_VARIABLES,
+    type: actionTypes.UPDATE_FORM,
     startDate,
     exitDate,
     stipendAmount,

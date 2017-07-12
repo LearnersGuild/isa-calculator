@@ -2,14 +2,14 @@ import React from 'react'
 import Head from 'next/head'
 import withRedux from 'next-redux-wrapper'
 
-import Card from 'react-toolbox/lib/card/Card'
-import CardText from 'react-toolbox/lib/card/CardText'
-import CardTitle from 'react-toolbox/lib/card/CardTitle'
+import AppBar from 'react-toolbox/lib/app_bar/AppBar'
 import ThemeProvider from 'react-toolbox/lib/ThemeProvider'
 
 import {initStore} from '../store'
 import theme from '../static/theme'
-import ISAVariables from '../components/ISAVariables'
+import Calculations from '../components/Calculations'
+import Form from '../components/Form'
+import ImportantDates from '../components/ImportantDates'
 
 const index = () => {
   return (
@@ -20,12 +20,12 @@ const index = () => {
         <link href='/static/theme.css' rel='stylesheet'/>
       </Head>
       <ThemeProvider theme={theme}>
-        <Card style={{maxWidth: '350px'}}>
-          <CardTitle title="ISA Calculator"/>
-          <CardText>
-            <ISAVariables/>
-          </CardText>
-        </Card>
+        <div>
+          <AppBar title='ISA Calculator'/>
+          <Form/>
+          <Calculations/>
+          <ImportantDates/>
+        </div>
       </ThemeProvider>
     </div>
   )

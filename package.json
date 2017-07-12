@@ -25,6 +25,7 @@
   },
   "reactToolbox": {
     "include": [
+      "APP_BAR",
       "BUTTON",
       "CARD",
       "DATE_PICKER",
@@ -34,6 +35,8 @@
     ],
     "customProperties": {
       "animation-duration": "0.3s",
+      "appbar-color": "var(--color-blue)",
+      "appbar-contrast": "var(--color-white)",
       "color-blue": "#00A3DF",
       "color-green": "#97C93D",
       "color-red": "#ED3F60",
