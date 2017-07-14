@@ -58,14 +58,14 @@ export const isaCancellationDate = startDate => {
     .toDate()
 }
 
-export const findNextStartDate = (date = new Date()) => {
+export const findNextDateInArrayAfter = (array, date = new Date) => {
   const d = _normalizeDate(date)
-  for (let i in startDates) {
-    const startDate = moment(startDates[i])
-    if (startDate.isAfter(d)) {
-      return startDate.toDate()
+  for (let i in array) {
+    const currDate = moment(array[i])
+    if (currDate.isAfter(d)) {
+      return currDate.toDate()
     }
   }
 
-  return moment(startDates[0]).toDate()
+  return null
 }

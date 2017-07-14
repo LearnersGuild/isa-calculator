@@ -1,11 +1,12 @@
 import {actionTypes} from './form'
+import {startDates} from '../config/dates'
 import {
   expectedExitDate,
   isaCancellationDate,
-  findNextStartDate,
+  findNextDateInArrayAfter,
 } from '../src/dates'
 
-const startDate = findNextStartDate()
+const startDate = findNextDateInArrayAfter(startDates)
 const exitDate = expectedExitDate(startDate)
 const cancelDate = isaCancellationDate(startDate)
 

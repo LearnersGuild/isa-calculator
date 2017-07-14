@@ -1,15 +1,16 @@
 import test from 'tape'
 import moment from 'moment'
 
+import {startDates} from '../../config/dates'
 import {
   expectedExitDate,
   isaCancellationDate,
-  findNextStartDate,
+  findNextDateInArrayAfter,
 } from '../dates'
 
 test('src/dates', t => {
   t.test('expectedExitDate', tt => {
-    tt.test('throws if the provided start date is not a date', ttt => {
+    tt.test('throws if the given start date is not a date', ttt => {
       ttt.plan(1)
       ttt.throws(() => expectedExitDate('xyz'))
     })
@@ -28,7 +29,7 @@ test('src/dates', t => {
   })
 
   t.test('isaCancellationDate', tt => {
-    tt.test('throws if the provided start date is not a date', ttt => {
+    tt.test('throws if the given start date is not a date', ttt => {
       ttt.plan(1)
       ttt.throws(() => isaCancellationDate('xyz'))
     })
@@ -46,15 +47,21 @@ test('src/dates', t => {
     })
   })
 
-  t.test('findNextStartDate', tt => {
-    tt.test('throws if the provided start date is not a date', ttt => {
+  t.test('findNextDateInArrayAfter', tt => {
+    tt.test('throws if the given date is not a date', ttt => {
       ttt.plan(1)
-      ttt.throws(() => findNextStartDate('xyz'))
+      ttt.throws(() => findNextDateInArrayAfter(startDates, 'xyz'))
+    })
+
+    tt.test('returns falsy value if the no date is found after the given date', ttt => {
+      ttt.plan(1)
+      const start = findNextDateInArrayAfter(startDates, new Date('2037-06-01'))
+      ttt.notOk(start, 'should be falsy')
     })
 
     tt.test('returns the next start date after the given date', ttt => {
       ttt.plan(1)
-      const start = findNextStartDate(new Date('2017-06-01'))
+      const start = findNextDateInArrayAfter(startDates, new Date('2017-06-01'))
       ttt.true(moment(start).isSame('2017-08-07'), 'should be 2017-Aug-07')
     })
   })

@@ -1,6 +1,7 @@
-import {findNextStartDate, expectedExitDate} from '../src/dates'
+import {startDates} from '../config/dates'
+import {findNextDateInArrayAfter, expectedExitDate} from '../src/dates'
 
-const startDate = findNextStartDate()
+const startDate = findNextDateInArrayAfter(startDates)
 const exitDate = expectedExitDate(startDate)
 
 const initialState = {
