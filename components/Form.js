@@ -11,6 +11,8 @@ import Switch from 'react-toolbox/lib/switch/Switch'
 
 import {updateForm} from '../store/form'
 
+import cardStyle from './cardStyle'
+
 class Form extends Component {
   update = newProps => {
     this.props.onUpdate(newProps)
@@ -33,7 +35,7 @@ class Form extends Component {
     const exitDate = new Date(exitDateStr)
 
     return (
-      <Card style={{maxWidth: '32%', display: 'inline-block', marginRight: '1%'}}>
+      <Card style={cardStyle}>
         <CardTitle title="Learner Details"/>
         <CardText>
           <DatePicker
@@ -41,6 +43,12 @@ class Form extends Component {
             label="Start Date"
             onChange={this.handleChange.bind(this, 'startDate')}
             value={startDate}
+            required/>
+          <DatePicker
+            icon="event"
+            label="Exit Date"
+            onChange={this.handleChange.bind(this, 'exitDate')}
+            value={exitDate}
             required/>
           <Input
             icon="attach_money"
@@ -59,12 +67,6 @@ class Form extends Component {
             label="Expected Annual Salary"
             onChange={this.handleChange.bind(this, 'expectedAnnualSalary')}
             value={expectedAnnualSalary}
-            required/>
-          <DatePicker
-            icon="event"
-            label="Exit Date"
-            onChange={this.handleChange.bind(this, 'exitDate')}
-            value={exitDate}
             required/>
           </CardText>
         </Card>

@@ -36,6 +36,7 @@
       "DATE_PICKER",
       "INPUT",
       "LINK",
+      "LIST",
       "SWITCH"
     ],
     "customProperties": {

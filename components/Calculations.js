@@ -7,6 +7,8 @@ import CardText from 'react-toolbox/lib/card/CardText'
 import CardTitle from 'react-toolbox/lib/card/CardTitle'
 import Input from 'react-toolbox/lib/input/Input'
 
+import cardStyle from './cardStyle'
+
 class Calculations extends Component {
   render () {
     const {
@@ -22,7 +24,7 @@ class Calculations extends Component {
       ''
 
     return (
-      <Card style={{maxWidth: '32%', display: 'inline-block', marginRight: '1%'}}>
+      <Card style={cardStyle}>
         <CardTitle title="ISA Details"/>
         <CardText>
           <Input

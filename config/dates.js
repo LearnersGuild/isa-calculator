@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 export const startDates = [
   '2016-07-11',
   '2016-09-19',

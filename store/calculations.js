@@ -4,15 +4,14 @@ import {
   expectedExitDate,
   isaCancellationDate,
   findNextDateInArrayAfter,
+  defaultStartDate,
+  defaultExpectedExitDate,
+  defaultISACancellationDate,
 } from '../src/dates'
 
-const startDate = findNextDateInArrayAfter(startDates)
-const exitDate = expectedExitDate(startDate)
-const cancelDate = isaCancellationDate(startDate)
-
 const initialState = {
-  expectedExitDate: exitDate.toISOString(),
-  isaCancellationDate: cancelDate.toISOString(),
+  expectedExitDate: defaultExpectedExitDate.toISOString(),
+  isaCancellationDate: defaultISACancellationDate.toISOString(),
 }
 
 export const reducer = (state = initialState, action) => {

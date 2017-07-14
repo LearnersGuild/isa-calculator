@@ -23,6 +23,19 @@ const _normalizeDate = date => {
     .milliseconds(0)
 }
 
+const _weekBreaks = weekBreakStarts.reduce((breakDays, breakStart) => {
+  const start = moment(breakStart)
+  const thisBreakDays = [
+    start.clone(),
+    start.add(1, 'day').clone(),
+    start.add(1, 'day').clone(),
+    start.add(1, 'day').clone(),
+    start.add(1, 'day').clone(),
+  ].map(m => m.format('YYYY-MM-DD'))
+  return breakDays.concat(thisBreakDays)
+}, [])
+export const allDaysOff = [...new Set(holidays.concat(_weekBreaks).sort())]
+
 const _numBreakWeeks = (startDate, weeks) => {
   const start = moment(startDate).clone()
   const end = start.clone().add(weeks, 'weeks')
@@ -72,3 +85,7 @@ export const isaCancellationDate = startDate => {
     .day('Monday')
     .toDate()
 }
+
+export const defaultStartDate = findNextDateInArrayAfter(startDates)
+export const defaultExpectedExitDate = expectedExitDate(defaultStartDate)
+export const defaultISACancellationDate = isaCancellationDate(defaultStartDate)
