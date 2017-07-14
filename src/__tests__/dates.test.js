@@ -5,6 +5,7 @@ import {startDates} from '../../config/dates'
 import {
   expectedExitDate,
   isaCancellationDate,
+  findDatesInArrayBetween,
   findNextDateInArrayAfter,
 } from '../dates'
 
@@ -47,13 +48,32 @@ test('src/dates', t => {
     })
   })
 
+  t.test('findDatesInArrayBetween', tt => {
+    tt.test('throws if the given date is not a date', ttt => {
+      ttt.plan(1)
+      ttt.throws(() => findDatesInArrayBetween(startDates, 'xyz'))
+    })
+
+    tt.test('returns empty array if no dates are found between the given dates', ttt => {
+      ttt.plan(1)
+      const dates = findDatesInArrayBetween(startDates, new Date('2040-01-01'), new Date('1970-01-01'))
+      ttt.deepEqual(dates, [], 'should be empty')
+    })
+
+    tt.test('returns the dates between the given dates', ttt => {
+      ttt.plan(1)
+      const dates = findDatesInArrayBetween(startDates, new Date('2017-06-01'), startDates[startDates.length - 1])
+      ttt.true(moment(dates[0]).isSame('2017-08-07'), 'should be 2017-Aug-07')
+    })
+  })
+
   t.test('findNextDateInArrayAfter', tt => {
     tt.test('throws if the given date is not a date', ttt => {
       ttt.plan(1)
       ttt.throws(() => findNextDateInArrayAfter(startDates, 'xyz'))
     })
 
-    tt.test('returns falsy value if the no date is found after the given date', ttt => {
+    tt.test('returns falsy value if no date is found after the given date', ttt => {
       ttt.plan(1)
       const start = findNextDateInArrayAfter(startDates, new Date('2037-06-01'))
       ttt.notOk(start, 'should be falsy')

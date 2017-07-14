@@ -26,22 +26,37 @@ const _normalizeDate = date => {
 const _numBreakWeeks = (startDate, weeks) => {
   const start = moment(startDate).clone()
   const end = start.clone().add(weeks, 'weeks')
-  let breaks = 0
 
-  for (let i in weekBreakStarts) {
-    const breakStart = moment(weekBreakStarts[i]).clone()
-    if (breakStart.isBetween(start, end)) {
-      breaks++
-    }
-  }
-
-  return breaks
+  return weekBreakStarts
+    .map(d => moment(d))
+    .reduce((numBreaks, breakStart) => {
+      if (breakStart.isBetween(start, end)) {
+        return numBreaks + 1
+      }
+      return numBreaks
+    }, 0)
 }
 
 const _addProgramWeeks = (startDate, weeks) => {
   return _normalizeDate(startDate)
     .clone()
     .add(weeks + _numBreakWeeks(startDate, weeks), 'weeks')
+}
+
+export const findDatesInArrayBetween = (array, start = new Date(), end = new Date()) => {
+  const d1 = _normalizeDate(start)
+  const d2 = _normalizeDate(end)
+
+  return array
+    .map(d => moment(d))
+    .filter(currDate => {
+      return currDate.isAfter(d1) && currDate.isBefore(d2)
+    })
+    .map(filteredDate => filteredDate.toDate())
+}
+
+export const findNextDateInArrayAfter = (array, date = new Date()) => {
+  return findDatesInArrayBetween(array, date, array[array.length - 1])[0]
 }
 
 export const expectedExitDate = startDate => {
@@ -56,16 +71,4 @@ export const isaCancellationDate = startDate => {
     .clone()
     .day('Monday')
     .toDate()
-}
-
-export const findNextDateInArrayAfter = (array, date = new Date) => {
-  const d = _normalizeDate(date)
-  for (let i in array) {
-    const currDate = moment(array[i])
-    if (currDate.isAfter(d)) {
-      return currDate.toDate()
-    }
-  }
-
-  return null
 }
