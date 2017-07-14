@@ -9,7 +9,7 @@ import DatePicker from 'react-toolbox/lib/date_picker/DatePicker'
 import Input from 'react-toolbox/lib/input/Input'
 import Switch from 'react-toolbox/lib/switch/Switch'
 
-import {updateForm} from '../store'
+import {updateForm} from '../store/form'
 
 class Form extends Component {
   update = newProps => {
@@ -73,11 +73,13 @@ class Form extends Component {
 }
 
 const mapStateToProps = ({
-  startDate,
-  exitDate,
-  stipendAmount,
-  isTakingLaptopStipend,
-  expectedAnnualSalary,
+  form: {
+    startDate,
+    exitDate,
+    stipendAmount,
+    isTakingLaptopStipend,
+    expectedAnnualSalary,
+  },
 }) => ({
   startDate,
   exitDate,

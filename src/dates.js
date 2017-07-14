@@ -38,23 +38,34 @@ const _numBreakWeeks = (startDate, weeks) => {
   return breaks
 }
 
-export const addProgramWeeks = (startDate, weeks) => {
+const _addProgramWeeks = (startDate, weeks) => {
   return _normalizeDate(startDate)
     .clone()
     .add(weeks + _numBreakWeeks(startDate, weeks), 'weeks')
-    .toDate()
 }
 
-export const lastPossibleExitDate = startDate => {
-  return _normalizeDate(addProgramWeeks(startDate, MAX_PROGRAM_WEEKS))
+export const expectedExitDate = startDate => {
+  return _addProgramWeeks(_normalizeDate(startDate), MAX_PROGRAM_WEEKS)
     .clone()
     .day('Friday')
     .toDate()
 }
 
 export const isaCancellationDate = startDate => {
-  return _normalizeDate(addProgramWeeks(startDate, CANCELLATION_WEEKS))
+  return _addProgramWeeks(_normalizeDate(startDate), CANCELLATION_WEEKS)
     .clone()
     .day('Monday')
     .toDate()
+}
+
+export const findNextStartDate = (date = new Date()) => {
+  const d = _normalizeDate(date)
+  for (let i in startDates) {
+    const startDate = moment(startDates[i])
+    if (startDate.isAfter(d)) {
+      return startDate.toDate()
+    }
+  }
+
+  return moment(startDates[0]).toDate()
 }
