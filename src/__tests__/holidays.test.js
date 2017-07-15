@@ -20,6 +20,7 @@ import {
   thanksgivingFriday,
   christmasEve,
   christmasDay,
+  isHoliday,
 } from '../holidays'
 
 test('src/holidays', t => {
@@ -266,6 +267,17 @@ test('src/holidays', t => {
         momentDayOnly('2020-12-25'),
       ]
       nexts.forEach((m, i) => ttt.true(m.isSame(expecteds[i]), 'should be next Christmas Day'))
+    })
+  })
+
+  t.test('isHoliday', tt => {
+    tt.test('throws if the given date is not a date', throwsIfInvalidDate(isHoliday))
+
+    tt.test('returns true if the given date is a holiday', ttt => {
+      ttt.plan(3)
+      ttt.true(isHoliday('2017-09-04'), 'should consider Labor Day a holiday')
+      ttt.true(isHoliday('2019-12-24'), 'should consider Christmas Eve a holiday')
+      ttt.true(isHoliday('2022-03-31'), 'should consider Cesar Chavez Day a holiday')
     })
   })
 })

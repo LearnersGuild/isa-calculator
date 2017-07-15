@@ -90,3 +90,37 @@ export const thanksgivingFriday = date => _holidayForNthWeekdayOccurence(10, 4, 
 // Christmas Eve and Day                December 24 and December 25
 export const christmasEve = date => _holidayForDate(11, 24, date)
 export const christmasDay = date => _holidayForDate(11, 25, date)
+
+const _holidaysAfter = date => {
+  return [
+    newYearsDay(date),
+    mlkJrDay(date),
+    presidentsDay(date),
+    cesarChavezDay(date),
+    memorialDay(date),
+    independenceDay(date),
+    laborDay(date),
+    indigenousPeoplesDay(date),
+    veteransDay(date),
+    thanksgivingDay(date),
+    thanksgivingFriday(date),
+    christmasEve(date),
+    christmasDay(date),
+  ].sort((a, b) => {
+    if (a.isBefore(b)) {
+      return -1
+    }
+    if (b.isBefore(a)) {
+      return 1
+    }
+    return 0
+  })
+}
+
+export const isHoliday = (date = new Date()) => {
+  const input = momentDayOnly(date)
+  const yesterday = input.clone().subtract(1, 'day')
+  const holidays = _holidaysAfter(yesterday)
+  const foundHoliday = holidays.find(d => d.isSame(input))
+  return Boolean(foundHoliday)
+}

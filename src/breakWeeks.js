@@ -53,3 +53,15 @@ export const winterBreakWeekDays = date => {
   const mon = winterBreakWeekMonday(date)
   return _weekdaysForMonday(mon)
 }
+
+const _breakWeekDaysAfter = date => {
+  return summerBreakWeekDays(date).concat(winterBreakWeekDays(date))
+}
+
+export const isDuringBreakWeek = (date = new Date()) => {
+  const input = momentDayOnly(date)
+  const lastWeek = input.clone().subtract(1, 'week')
+  const breakWeekDays = _breakWeekDaysAfter(lastWeek)
+  const foundBreakWeekDay = breakWeekDays.find(d => d.isSame(input))
+  return Boolean(foundBreakWeekDay)
+}

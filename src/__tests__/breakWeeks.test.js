@@ -11,6 +11,7 @@ import {
   summerBreakWeekDays,
   winterBreakWeekMonday,
   winterBreakWeekDays,
+  isDuringBreakWeek,
 } from '../breakWeeks'
 
 test('src/breakWeeks', t => {
@@ -87,6 +88,16 @@ test('src/breakWeeks', t => {
         momentDayOnly('2020-12-25'),
       ]
       days.forEach((day, i) => ttt.true(day.isSame(expected[i]), 'should be the last fully-contained week in December'))
+    })
+  })
+
+  t.test('isDuringBreakWeek', tt => {
+    tt.test('throws if the given date is not a date', throwsIfInvalidDate(isDuringBreakWeek))
+
+    tt.test('returns true if the given date is a holiday', ttt => {
+      ttt.plan(2)
+      ttt.true(isDuringBreakWeek('2017-12-27'), 'should consider Christmas week to be a break')
+      ttt.true(isDuringBreakWeek('2020-06-24'), 'should consider last week of June to be a break')
     })
   })
 })
