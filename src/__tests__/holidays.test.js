@@ -3,6 +3,10 @@ import moment from 'moment'
 
 import {
   momentDayOnly,
+  throwsIfInvalidDate,
+} from '../util'
+
+import {
   newYearsDay,
   mlkJrDay,
   presidentsDay,
@@ -18,40 +22,9 @@ import {
   christmasDay,
 } from '../holidays'
 
-const _throwsIfInvalidDate = func => {
-  return ttt => {
-    ttt.plan(1)
-    ttt.throws(() => func('xyz'))
-  }
-}
-
 test('src/holidays', t => {
-  t.test('momentDayOnly', tt => {
-    tt.test('throws if the given date is not a date', _throwsIfInvalidDate(momentDayOnly))
-
-    tt.test('returns today if no date is given', ttt => {
-      ttt.plan(3)
-      const today = new Date()
-      const todayMoment = momentDayOnly()
-      ttt.equal(todayMoment.year(), today.getFullYear(), 'should be current year')
-      ttt.equal(todayMoment.month(), today.getMonth(), 'should be current month')
-      ttt.equal(todayMoment.date(), today.getDate(), 'should be current day')
-    })
-
-    tt.test('returns given date with 0 for hour, minute, and second', ttt => {
-      ttt.plan(6)
-      const dayOnly = momentDayOnly('2017-08-01')
-      ttt.equal(dayOnly.year(), 2017, 'should return given year')
-      ttt.equal(dayOnly.month(), 7, 'should return given month')
-      ttt.equal(dayOnly.date(), 1, 'should return given day')
-      ttt.equal(dayOnly.hour(), 0, 'should return 0 for hour')
-      ttt.equal(dayOnly.minute(), 0, 'should return 0 for minute')
-      ttt.equal(dayOnly.second(), 0, 'should return 0 for second')
-    })
-  })
-
   t.test('newYearsDay', tt => {
-    tt.test('throws if the given date is not a date', _throwsIfInvalidDate(newYearsDay))
+    tt.test('throws if the given date is not a date', throwsIfInvalidDate(newYearsDay))
 
     tt.test('returns next New Year\'s day if no date is given', ttt => {
       ttt.plan(1)
@@ -69,7 +42,7 @@ test('src/holidays', t => {
   })
 
   t.test('mlkJrDay', tt => {
-    tt.test('throws if the given date is not a date', _throwsIfInvalidDate(mlkJrDay))
+    tt.test('throws if the given date is not a date', throwsIfInvalidDate(mlkJrDay))
 
     tt.test('returns next MLK Jr. Day after the given date', ttt => {
       ttt.plan(3)
@@ -88,7 +61,7 @@ test('src/holidays', t => {
   })
 
   t.test('presidentsDay', tt => {
-    tt.test('throws if the given date is not a date', _throwsIfInvalidDate(presidentsDay))
+    tt.test('throws if the given date is not a date', throwsIfInvalidDate(presidentsDay))
 
     tt.test('returns the weekday closest to the next President\'s Day after the given date', ttt => {
       ttt.plan(3)
@@ -107,7 +80,7 @@ test('src/holidays', t => {
   })
 
   t.test('cesarChavezDay', tt => {
-    tt.test('throws if the given date is not a date', _throwsIfInvalidDate(cesarChavezDay))
+    tt.test('throws if the given date is not a date', throwsIfInvalidDate(cesarChavezDay))
 
     tt.test('returns the weekday closest to the next Cesar Chavez Day after the given date', ttt => {
       ttt.plan(3)
@@ -126,7 +99,7 @@ test('src/holidays', t => {
   })
 
   t.test('memorialDay', tt => {
-    tt.test('throws if the given date is not a date', _throwsIfInvalidDate(memorialDay))
+    tt.test('throws if the given date is not a date', throwsIfInvalidDate(memorialDay))
 
     tt.test('returns the weekday closest to the next Memorial Day after the given date', ttt => {
       ttt.plan(3)
@@ -145,7 +118,7 @@ test('src/holidays', t => {
   })
 
   t.test('independenceDay', tt => {
-    tt.test('throws if the given date is not a date', _throwsIfInvalidDate(independenceDay))
+    tt.test('throws if the given date is not a date', throwsIfInvalidDate(independenceDay))
 
     tt.test('returns the weekday closest to the next Independence Day after the given date', ttt => {
       ttt.plan(3)
@@ -164,7 +137,7 @@ test('src/holidays', t => {
   })
 
   t.test('laborDay', tt => {
-    tt.test('throws if the given date is not a date', _throwsIfInvalidDate(laborDay))
+    tt.test('throws if the given date is not a date', throwsIfInvalidDate(laborDay))
 
     tt.test('returns the weekday closest to the next Labor Day after the given date', ttt => {
       ttt.plan(3)
@@ -183,7 +156,7 @@ test('src/holidays', t => {
   })
 
   t.test('indigenousPeoplesDay', tt => {
-    tt.test('throws if the given date is not a date', _throwsIfInvalidDate(indigenousPeoplesDay))
+    tt.test('throws if the given date is not a date', throwsIfInvalidDate(indigenousPeoplesDay))
 
     tt.test('returns the weekday closest to the next Indigenous People\'s Day after the given date', ttt => {
       ttt.plan(3)
@@ -202,7 +175,7 @@ test('src/holidays', t => {
   })
 
   t.test('veteransDay', tt => {
-    tt.test('throws if the given date is not a date', _throwsIfInvalidDate(veteransDay))
+    tt.test('throws if the given date is not a date', throwsIfInvalidDate(veteransDay))
 
     tt.test('returns the weekday closest to the next Veterans Day after the given date', ttt => {
       ttt.plan(3)
@@ -221,7 +194,7 @@ test('src/holidays', t => {
   })
 
   t.test('thanksgivingDay', tt => {
-    tt.test('throws if the given date is not a date', _throwsIfInvalidDate(thanksgivingDay))
+    tt.test('throws if the given date is not a date', throwsIfInvalidDate(thanksgivingDay))
 
     tt.test('returns the weekday closest to the next Thanksgiving Day after the given date', ttt => {
       ttt.plan(3)
@@ -240,7 +213,7 @@ test('src/holidays', t => {
   })
 
   t.test('thanksgivingFriday', tt => {
-    tt.test('throws if the given date is not a date', _throwsIfInvalidDate(thanksgivingFriday))
+    tt.test('throws if the given date is not a date', throwsIfInvalidDate(thanksgivingFriday))
 
     tt.test('returns the weekday closest to the next Thanksgiving Friday after the given date', ttt => {
       ttt.plan(3)
@@ -259,7 +232,7 @@ test('src/holidays', t => {
   })
 
   t.test('christmasEve', tt => {
-    tt.test('throws if the given date is not a date', _throwsIfInvalidDate(christmasEve))
+    tt.test('throws if the given date is not a date', throwsIfInvalidDate(christmasEve))
 
     tt.test('returns the weekday closest to the next Christmas Eve after the given date', ttt => {
       ttt.plan(3)
@@ -278,7 +251,7 @@ test('src/holidays', t => {
   })
 
   t.test('christmasDay', tt => {
-    tt.test('throws if the given date is not a date', _throwsIfInvalidDate(christmasDay))
+    tt.test('throws if the given date is not a date', throwsIfInvalidDate(christmasDay))
 
     tt.test('returns the weekday closest to the next Christmas Day after the given date', ttt => {
       ttt.plan(3)

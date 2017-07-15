@@ -1,5 +1,7 @@
 import moment from 'moment'
 
+import {momentDayOnly} from './util'
+
 const _ensureWeekday = m => {
   if (m.day() === 6) {
     return m.clone().subtract(1, 'day')
@@ -40,18 +42,6 @@ const _holidayForNthWeekdayOccurence = (month, n, day, date = new Date()) => {
   output.add(output > input ? 0 : 52, 'weeks')
 
   return output
-}
-
-export const momentDayOnly = date => {
-  const dayOnly = moment(date)
-  if (!dayOnly.isValid()) {
-    throw new Error(`${date} is not a valid date`)
-  }
-  return dayOnly
-    .hour(0)
-    .minute(0)
-    .second(0)
-    .millisecond(0)
 }
 
 // New Year’s Day	                      January 1
