@@ -1,10 +1,8 @@
-import {startDates} from '../config/dates'
 import {
-  findNextDateInArrayAfter,
   expectedExitDate,
   defaultStartDate,
   defaultExpectedExitDate,
-} from '../src/dates'
+} from '../src/programDates'
 
 const initialState = {
   startDate: defaultStartDate.toISOString(),

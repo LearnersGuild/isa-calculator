@@ -117,6 +117,14 @@ const _holidaysAfter = date => {
   })
 }
 
+export const holidaysBetween = (startDate, endDate) => {
+  const start = momentDayOnly(startDate)
+  const end = momentDayOnly(endDate)
+  return _holidaysAfter(start)
+    .filter(day => day.isSameOrAfter(start) && day.isSameOrBefore(end))
+    .map(day => day.toDate())
+}
+
 export const isHoliday = (date = new Date()) => {
   const input = momentDayOnly(date)
   const yesterday = input.clone().subtract(1, 'day')

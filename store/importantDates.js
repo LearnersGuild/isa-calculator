@@ -1,12 +1,11 @@
 import {actionTypes} from './form'
+import {holidaysBetween} from '../src/holidays'
+import {breakWeekDaysBetween} from '../src/breakWeeks'
 import {
-  allDaysOff,
-  findDatesInArrayBetween,
   stipendPaymentDatesBetween,
   defaultStartDate,
   defaultExpectedExitDate,
-  defaultISACancellationDate,
-} from '../src/dates'
+} from '../src/programDates'
 
 const _dateTypeTagger = type => {
   return (acc, date) => {
@@ -15,16 +14,22 @@ const _dateTypeTagger = type => {
   }
 }
 
-const encounteredHolidays = findDatesInArrayBetween(allDaysOff, defaultStartDate, defaultExpectedExitDate)
-  .reduce(_dateTypeTagger('holiday'), {})
+const _stateFromStartAndEndDates = (startDate, exitDate) => {
+  const encounteredHolidays = holidaysBetween(startDate, exitDate)
+    .reduce(_dateTypeTagger('holiday'), {})
+  const encounteredBreakWeekDays = breakWeekDaysBetween(startDate, exitDate)
+    .reduce(_dateTypeTagger('holiday'), {})
+  const stipendPaymentDates = stipendPaymentDatesBetween(startDate, exitDate)
+    .reduce(_dateTypeTagger('stipendPayment'), {})
 
-const stipendPaymentDates = stipendPaymentDatesBetween(defaultStartDate, defaultExpectedExitDate)
-  .reduce(_dateTypeTagger('stipendPayment'), {})
-
-const initialState = {
-  ...encounteredHolidays,
-  ...stipendPaymentDates,
+  return {
+    ...encounteredHolidays,
+    ...encounteredBreakWeekDays,
+    ...stipendPaymentDates,
+  }
 }
+
+const initialState = _stateFromStartAndEndDates(defaultStartDate, defaultExpectedExitDate)
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {

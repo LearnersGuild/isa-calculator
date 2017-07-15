@@ -58,6 +58,14 @@ const _breakWeekDaysAfter = date => {
   return summerBreakWeekDays(date).concat(winterBreakWeekDays(date))
 }
 
+export const breakWeekDaysBetween = (startDate, endDate) => {
+  const start = momentDayOnly(startDate)
+  const end = momentDayOnly(endDate)
+  return _breakWeekDaysAfter(start)
+    .filter(day => day.isSameOrAfter(start) && day.isSameOrBefore(end))
+    .map(day => day.toDate())
+}
+
 export const isDuringBreakWeek = (date = new Date()) => {
   const input = momentDayOnly(date)
   const lastWeek = input.clone().subtract(1, 'week')

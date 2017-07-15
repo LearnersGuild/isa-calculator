@@ -1,13 +1,11 @@
 import {actionTypes} from './form'
-import {startDates} from '../config/dates'
 import {
   expectedExitDate,
   isaCancellationDate,
-  findNextDateInArrayAfter,
   defaultStartDate,
   defaultExpectedExitDate,
   defaultISACancellationDate,
-} from '../src/dates'
+} from '../src/programDates'
 
 const initialState = {
   expectedExitDate: defaultExpectedExitDate.toISOString(),
