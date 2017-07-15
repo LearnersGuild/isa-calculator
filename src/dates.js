@@ -1,10 +1,10 @@
 import moment from 'moment'
 
-import x from '../config/dates'
 import {
   startDates,
   weekBreakStarts,
   holidays,
+  stipendConfig,
   MAX_PROGRAM_WEEKS,
   CANCELLATION_WEEKS,
 } from '../config/dates'
@@ -84,6 +84,21 @@ export const isaCancellationDate = startDate => {
     .clone()
     .day('Monday')
     .toDate()
+}
+
+export const stipendPaymentDatesBetween = (startDate, endDate) => {
+  const stipendPaymentDate = _normalizeDate(stipendConfig.firstDisbursementDate)
+  const start = _normalizeDate(startDate)
+  const end = _normalizeDate(endDate)
+  const paymentDates = []
+  while (stipendPaymentDate < start) {
+    stipendPaymentDate.add(2, 'weeks')
+  }
+  while (stipendPaymentDate.isAfter(start) && stipendPaymentDate.isBefore(end)) {
+    paymentDates.push(stipendPaymentDate.clone())
+    stipendPaymentDate.add(2, 'weeks')
+  }
+  return paymentDates.map(m => m.toDate())
 }
 
 export const defaultStartDate = findNextDateInArrayAfter(startDates)

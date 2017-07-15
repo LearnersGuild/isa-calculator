@@ -97,5 +97,10 @@ export const holidays = [
   '2020-12-25',
 ]
 
+export const stipendConfig = {
+  numWeeksBetweenPayments: 2,
+  firstDisbursementDate: '2016-09-02',
+}
+
 export const MAX_PROGRAM_WEEKS = 40
 export const CANCELLATION_WEEKS = 5

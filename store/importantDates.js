@@ -2,6 +2,7 @@ import {actionTypes} from './form'
 import {
   allDaysOff,
   findDatesInArrayBetween,
+  stipendPaymentDatesBetween,
   defaultStartDate,
   defaultExpectedExitDate,
   defaultISACancellationDate,
@@ -17,7 +18,13 @@ const _dateTypeTagger = type => {
 const encounteredHolidays = findDatesInArrayBetween(allDaysOff, defaultStartDate, defaultExpectedExitDate)
   .reduce(_dateTypeTagger('holiday'), {})
 
-const initialState = encounteredHolidays
+const stipendPaymentDates = stipendPaymentDatesBetween(defaultStartDate, defaultExpectedExitDate)
+  .reduce(_dateTypeTagger('stipendPayment'), {})
+
+const initialState = {
+  ...encounteredHolidays,
+  ...stipendPaymentDates,
+}
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
