@@ -2,13 +2,12 @@ import moment from 'moment'
 
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import PropTypes from 'prop-types'
 
 import Card from 'react-toolbox/lib/card/Card'
 import CardTitle from 'react-toolbox/lib/card/CardTitle'
 import List from 'react-toolbox/lib/list/List'
 import ListItem from 'react-toolbox/lib/list/ListItem'
-
-import {updateImportantDates} from '../store'
 
 import cardStyle from './cardStyle'
 
@@ -23,7 +22,7 @@ const iconForType = type => {
 }
 
 class ImportantDates extends Component {
-  render () {
+  render() {
     const {importantDates} = this.props
 
     const listItems = Object.keys(importantDates)
@@ -45,6 +44,10 @@ class ImportantDates extends Component {
       </Card>
     )
   }
+}
+
+ImportantDates.propTypes = {
+  importantDates: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = ({importantDates}) => ({importantDates})

@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
+import PropTypes from 'prop-types'
 
 import Card from 'react-toolbox/lib/card/Card'
 import CardText from 'react-toolbox/lib/card/CardText'
@@ -14,15 +15,15 @@ import {updateForm} from '../store/form'
 import cardStyle from './cardStyle'
 
 class Form extends Component {
-  update = newProps => {
+  update(newProps) {
     this.props.onUpdate(newProps)
   }
 
-  handleChange = (name, value) => {
+  handleChange(name, value) {
     this.update({...this.props, [name]: value})
   }
 
-  render () {
+  render() {
     const {
       startDate: startDateStr,
       stipendAmount,
@@ -33,6 +34,7 @@ class Form extends Component {
 
     const startDate = new Date(startDateStr)
     const exitDate = new Date(exitDateStr)
+    const handleChange = name => value => this.handleChange(name, value)
 
     return (
       <Card style={cardStyle}>
@@ -41,37 +43,51 @@ class Form extends Component {
           <DatePicker
             icon="event"
             label="Start Date"
-            onChange={this.handleChange.bind(this, 'startDate')}
+            onChange={handleChange('startDate')}
             value={startDate}
-            required/>
+            required
+          />
           <DatePicker
             icon="event"
             label="Exit Date"
-            onChange={this.handleChange.bind(this, 'exitDate')}
+            onChange={handleChange('exitDate')}
             value={exitDate}
-            required/>
+            required
+          />
           <Input
             icon="attach_money"
             type="tel"
             label="Living Fund Stipend Amount"
-            onChange={this.handleChange.bind(this, 'stipendAmount')}
+            onChange={handleChange('stipendAmount')}
             value={stipendAmount}
-            required/>
+            required
+          />
           <Switch
             checked={isTakingLaptopStipend}
             label="Taking laptop stipend?"
-            onChange={this.handleChange.bind(this, 'isTakingLaptopStipend')}/>
+            onChange={handleChange('isTakingLaptopStipend')}
+          />
           <Input
             icon="attach_money"
             type="tel"
             label="Expected Annual Salary"
-            onChange={this.handleChange.bind(this, 'expectedAnnualSalary')}
+            onChange={handleChange('expectedAnnualSalary')}
             value={expectedAnnualSalary}
-            required/>
-          </CardText>
-        </Card>
+            required
+          />
+        </CardText>
+      </Card>
     )
   }
+}
+
+Form.propTypes = {
+  onUpdate: PropTypes.func.isRequired,
+  startDate: PropTypes.string.isRequired,
+  exitDate: PropTypes.string.isRequired,
+  stipendAmount: PropTypes.number.isRequired,
+  isTakingLaptopStipend: PropTypes.bool.isRequired,
+  expectedAnnualSalary: PropTypes.number.isRequired,
 }
 
 const mapStateToProps = ({
@@ -90,7 +106,7 @@ const mapStateToProps = ({
   expectedAnnualSalary,
 })
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     onUpdate: bindActionCreators(updateForm, dispatch)
   }

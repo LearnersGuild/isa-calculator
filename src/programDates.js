@@ -1,5 +1,3 @@
-import moment from 'moment'
-
 import {momentDayOnly} from './util'
 import {isHoliday} from './holidays'
 import {
@@ -28,7 +26,7 @@ const _legacyStartDates = [
 
 const _legacyStartDate = date => {
   const input = momentDayOnly(date)
-  for (let i in _legacyStartDates) {
+  for (const i in _legacyStartDates) {
     if (input.isBefore(_legacyStartDates[i])) {
       return _legacyStartDates[i]
     }
@@ -107,7 +105,7 @@ export const stipendPaymentDatesBetween = (startDate, endDate) => {
   const start = momentDayOnly(startDate)
   const end = momentDayOnly(endDate)
   const paymentDates = []
-  while (stipendPaymentDate < start) {
+  while (stipendPaymentDate.isBefore(start)) {
     stipendPaymentDate.add(2, 'weeks')
   }
   while (stipendPaymentDate.isAfter(start) && stipendPaymentDate.isBefore(end)) {

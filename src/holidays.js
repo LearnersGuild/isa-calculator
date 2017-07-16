@@ -1,5 +1,3 @@
-import moment from 'moment'
-
 import {momentDayOnly} from './util'
 
 const _ensureWeekday = m => {

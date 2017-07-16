@@ -71,5 +71,4 @@ test('src/programDates', t => {
       ttt.true(momentDayOnly(cancel).isSame('2018-01-15'), 'should be Monday of 6th week')
     })
   })
-
 })

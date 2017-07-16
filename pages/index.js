@@ -6,7 +6,7 @@ import withRedux from 'next-redux-wrapper'
 import AppBar from 'react-toolbox/lib/app_bar/AppBar'
 import ThemeProvider from 'react-toolbox/lib/ThemeProvider'
 
-import {initStore} from '../store'
+import store from '../store'
 import theme from '../static/theme'
 import Calculations from '../components/Calculations'
 import Form from '../components/Form'
@@ -54,7 +54,7 @@ const index = () => {
           <AppBar
             leftIcon={leftIcon}
             title={title}
-            />
+          />
           <Form/>
           <Calculations/>
           <ImportantDates/>
@@ -62,7 +62,6 @@ const index = () => {
       </ThemeProvider>
     </div>
   )
-
 }
 
-export default withRedux(initStore)(index)
+export default withRedux(store)(index)

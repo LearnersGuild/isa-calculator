@@ -1,4 +1,3 @@
-import {actionTypes} from './form'
 import {holidaysBetween} from '../src/holidays'
 import {breakWeekDaysBetween} from '../src/breakWeeks'
 import {
@@ -6,6 +5,7 @@ import {
   defaultStartDate,
   defaultExpectedExitDate,
 } from '../src/programDates'
+import {actionTypes} from './form'
 
 const _dateTypeTagger = type => {
   return (acc, date) => {
@@ -31,11 +31,10 @@ const _stateFromStartAndEndDates = (startDate, exitDate) => {
 
 const initialState = _stateFromStartAndEndDates(defaultStartDate, defaultExpectedExitDate)
 
-export const reducer = (state = initialState, action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.UPDATE_FORM:
-      return findDatesInArrayBetween(allDaysOff, action.startDate, action.exitDate)
-        .reduce(_dateTypeTagger('holiday'), {})
+      return _stateFromStartAndEndDates(action.startDate, action.exitDate)
     default: return state
   }
 }

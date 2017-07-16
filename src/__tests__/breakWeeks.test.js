@@ -1,5 +1,4 @@
 import test from 'tape'
-import moment from 'moment'
 
 import {
   momentDayOnly,

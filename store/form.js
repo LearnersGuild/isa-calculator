@@ -1,5 +1,4 @@
 import {
-  expectedExitDate,
   defaultStartDate,
   defaultExpectedExitDate,
 } from '../src/programDates'

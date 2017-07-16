@@ -1,6 +1,8 @@
+import moment from 'moment'
+
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import moment from 'moment'
+import PropTypes from 'prop-types'
 
 import Card from 'react-toolbox/lib/card/Card'
 import CardText from 'react-toolbox/lib/card/CardText'
@@ -10,7 +12,7 @@ import Input from 'react-toolbox/lib/input/Input'
 import cardStyle from './cardStyle'
 
 class Calculations extends Component {
-  render () {
+  render() {
     const {
       expectedExitDate: expectedExitDateStr,
       isaCancellationDate: isaCancellationDateStr,
@@ -32,17 +34,24 @@ class Calculations extends Component {
             icon="event"
             label="Expected Exit Date"
             value={exitDate}
-            disabled/>
+            disabled
+          />
           <Input
             style={{color: 'black'}}
             icon="event"
             label="ISA Cancellation Date"
             value={cancellationDate}
-            disabled/>
+            disabled
+          />
         </CardText>
       </Card>
     )
   }
+}
+
+Calculations.propTypes = {
+  expectedExitDate: PropTypes.string.isRequired,
+  isaCancellationDate: PropTypes.string.isRequired,
 }
 
 const mapStateToProps = ({
