@@ -9,6 +9,7 @@ import CardTitle from 'react-toolbox/lib/card/CardTitle'
 import List from 'react-toolbox/lib/list/List'
 import ListItem from 'react-toolbox/lib/list/ListItem'
 
+import {formatDate} from '../src/util'
 import cardStyle from './cardStyle'
 
 const iconForType = type => {
@@ -29,7 +30,7 @@ class ImportantDates extends Component {
       .sort()
       .map((date, i) => {
         const type = importantDates[date]
-        const caption = moment(date).format('D MMM YYYY')
+        const caption = formatDate(date)
         return (
           <ListItem key={i} leftIcon={iconForType(type)} caption={caption}/>
         )

@@ -9,6 +9,7 @@ import CardText from 'react-toolbox/lib/card/CardText'
 import CardTitle from 'react-toolbox/lib/card/CardTitle'
 import Input from 'react-toolbox/lib/input/Input'
 
+import {formatDate} from '../src/util'
 import cardStyle from './cardStyle'
 
 class Calculations extends Component {
@@ -18,12 +19,8 @@ class Calculations extends Component {
       isaCancellationDate: isaCancellationDateStr,
     } = this.props
 
-    const exitDate = expectedExitDateStr ?
-      moment(expectedExitDateStr).format('D MMM YYYY') :
-      ''
-    const cancellationDate = isaCancellationDateStr ?
-      moment(isaCancellationDateStr).format('D MMM YYYY') :
-      ''
+    const exitDate = expectedExitDateStr ? formatDate(expectedExitDateStr) : ''
+    const cancellationDate = isaCancellationDateStr ? formatDate(isaCancellationDateStr) : ''
 
     return (
       <Card style={cardStyle}>

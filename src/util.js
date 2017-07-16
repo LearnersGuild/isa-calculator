@@ -18,3 +18,7 @@ export const throwsIfInvalidDate = func => {
     ttt.throws(() => func('xyz'))
   }
 }
+
+export const formatDate = date => {
+  return moment(date).format('ddd DD MMM YYYY')
+}

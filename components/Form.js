@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
@@ -11,6 +13,7 @@ import Input from 'react-toolbox/lib/input/Input'
 import Switch from 'react-toolbox/lib/switch/Switch'
 
 import {updateForm} from '../store/form'
+import {formatDate} from '../src/util'
 
 import cardStyle from './cardStyle'
 
@@ -44,6 +47,7 @@ class Form extends Component {
             icon="event"
             label="Start Date"
             onChange={handleChange('startDate')}
+            inputFormat={formatDate}
             value={startDate}
             required
           />
@@ -51,6 +55,7 @@ class Form extends Component {
             icon="event"
             label="Exit Date"
             onChange={handleChange('exitDate')}
+            inputFormat={formatDate}
             value={exitDate}
             required
           />
