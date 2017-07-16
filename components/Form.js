@@ -1,5 +1,3 @@
-import moment from 'moment'
-
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux'
@@ -12,32 +10,34 @@ import DatePicker from 'react-toolbox/lib/date_picker/DatePicker'
 import Input from 'react-toolbox/lib/input/Input'
 import Switch from 'react-toolbox/lib/switch/Switch'
 
-import {updateForm} from '../store/form'
+import {
+  updateStartDate,
+  updateExitDate,
+  updateStipendAmount,
+  updateIsTakingLaptopStipend,
+  updateExpectedAnnualSalary,
+} from '../store/form'
 import {formatDate} from '../src/util'
 
 import cardStyle from './cardStyle'
 
 class Form extends Component {
-  update(newProps) {
-    this.props.onUpdate(newProps)
-  }
-
-  handleChange(name, value) {
-    this.update({...this.props, [name]: value})
-  }
-
   render() {
     const {
       startDate: startDateStr,
+      exitDate: exitDateStr,
       stipendAmount,
       isTakingLaptopStipend,
       expectedAnnualSalary,
-      exitDate: exitDateStr,
+      onUpdateStartDate,
+      onUpdateExitDate,
+      onUpdateStipendAmount,
+      onUpdateIsTakingLaptopStipend,
+      onUpdateExpectedAnnualSalary,
     } = this.props
 
     const startDate = new Date(startDateStr)
     const exitDate = new Date(exitDateStr)
-    const handleChange = name => value => this.handleChange(name, value)
 
     return (
       <Card style={cardStyle}>
@@ -46,7 +46,7 @@ class Form extends Component {
           <DatePicker
             icon="event"
             label="Start Date"
-            onChange={handleChange('startDate')}
+            onChange={onUpdateStartDate}
             inputFormat={formatDate}
             value={startDate}
             required
@@ -54,7 +54,7 @@ class Form extends Component {
           <DatePicker
             icon="event"
             label="Exit Date"
-            onChange={handleChange('exitDate')}
+            onChange={onUpdateExitDate}
             inputFormat={formatDate}
             value={exitDate}
             required
@@ -63,20 +63,20 @@ class Form extends Component {
             icon="attach_money"
             type="tel"
             label="Living Fund Stipend Amount"
-            onChange={handleChange('stipendAmount')}
+            onChange={onUpdateStipendAmount}
             value={stipendAmount}
             required
           />
           <Switch
             checked={isTakingLaptopStipend}
             label="Taking laptop stipend?"
-            onChange={handleChange('isTakingLaptopStipend')}
+            onChange={onUpdateIsTakingLaptopStipend}
           />
           <Input
             icon="attach_money"
             type="tel"
             label="Expected Annual Salary"
-            onChange={handleChange('expectedAnnualSalary')}
+            onChange={onUpdateExpectedAnnualSalary}
             value={expectedAnnualSalary}
             required
           />
@@ -87,7 +87,11 @@ class Form extends Component {
 }
 
 Form.propTypes = {
-  onUpdate: PropTypes.func.isRequired,
+  onUpdateStartDate: PropTypes.func.isRequired,
+  onUpdateExitDate: PropTypes.func.isRequired,
+  onUpdateStipendAmount: PropTypes.func.isRequired,
+  onUpdateIsTakingLaptopStipend: PropTypes.func.isRequired,
+  onUpdateExpectedAnnualSalary: PropTypes.func.isRequired,
   startDate: PropTypes.string.isRequired,
   exitDate: PropTypes.string.isRequired,
   stipendAmount: PropTypes.number.isRequired,
@@ -113,7 +117,11 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    onUpdate: bindActionCreators(updateForm, dispatch)
+    onUpdateStartDate: bindActionCreators(updateStartDate, dispatch),
+    onUpdateExitDate: bindActionCreators(updateExitDate, dispatch),
+    onUpdateStipendAmount: bindActionCreators(updateStipendAmount, dispatch),
+    onUpdateIsTakingLaptopStipend: bindActionCreators(updateIsTakingLaptopStipend, dispatch),
+    onUpdateExpectedAnnualSalary: bindActionCreators(updateExpectedAnnualSalary, dispatch),
   }
 }
 

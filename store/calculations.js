@@ -13,7 +13,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.UPDATE_FORM:
+    case actionTypes.UPDATE_START_DATE:
       return {
         ...state,
         expectedExitDate: expectedExitDate(action.startDate).toISOString(),

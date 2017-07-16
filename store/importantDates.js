@@ -22,18 +22,21 @@ const _stateFromStartAndEndDates = (startDate, exitDate) => {
   const stipendPaymentDates = stipendPaymentDatesBetween(startDate, exitDate)
     .reduce(_dateTypeTagger('stipendPayment'), {})
 
-  return {
+  const merged = {
     ...encounteredHolidays,
     ...encounteredBreakWeekDays,
     ...stipendPaymentDates,
   }
+
+  return merged
 }
 
 const initialState = _stateFromStartAndEndDates(defaultStartDate, defaultExpectedExitDate)
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.UPDATE_FORM:
+    case actionTypes.UPDATE_START_DATE:
+    case actionTypes.UPDATE_EXIT_DATE:
       return _stateFromStartAndEndDates(action.startDate, action.exitDate)
     default: return state
   }
