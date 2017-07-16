@@ -23,11 +23,7 @@ export const actionTypes = {
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.UPDATE_START_DATE:
-      return {
-        ...state,
-        startDate: new Date(action.startDate).toISOString(),
-        exitDate: expectedExitDate(action.startDate).toISOString(),
-      }
+      return {...state, startDate: new Date(action.startDate).toISOString()}
     case actionTypes.UPDATE_EXIT_DATE:
       return {...state, exitDate: new Date(action.exitDate).toISOString()}
     case actionTypes.UPDATE_STIPEND_AMOUNT:
@@ -40,10 +36,11 @@ export const reducer = (state = initialState, action) => {
   }
 }
 
-export const updateStartDate = startDate => dispatch => dispatch({
-  type: actionTypes.UPDATE_START_DATE,
-  startDate,
-})
+export const updateStartDate = startDate => dispatch => {
+  dispatch({type: actionTypes.UPDATE_START_DATE, startDate})
+  const exitDate = expectedExitDate(startDate).toISOString()
+  dispatch({type: actionTypes.UPDATE_EXIT_DATE, startDate, exitDate})
+}
 export const updateExitDate = exitDate => dispatch => dispatch({
   type: actionTypes.UPDATE_EXIT_DATE,
   exitDate,

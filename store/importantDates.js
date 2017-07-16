@@ -35,7 +35,6 @@ const initialState = _stateFromStartAndEndDates(defaultStartDate, defaultExpecte
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.UPDATE_START_DATE:
     case actionTypes.UPDATE_EXIT_DATE:
       return _stateFromStartAndEndDates(action.startDate, action.exitDate)
     default: return state
