@@ -42,6 +42,7 @@
     "eslint-config-xo-react": "^0.13.0",
     "eslint-plugin-react": "^7.1.0",
     "nyc": "^11.0.3",
+    "tap-spec": "^4.1.1",
     "tape": "^4.7.0",
     "xo": "^0.18.2"
   },
