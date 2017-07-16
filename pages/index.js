@@ -44,6 +44,7 @@ const index = () => {
   return (
     <div>
       <Head>
+        <title>ISA Calculator</title>
         <link rel="icon" type="image/png" href="https://brand.learnersguild.org/coast-228x228.png"/>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"/>
