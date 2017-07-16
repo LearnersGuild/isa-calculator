@@ -16,8 +16,8 @@ export default (state = initialState, action) => {
     case actionTypes.UPDATE_FORM:
       return {
         ...state,
-        expectedExitDate: expectedExitDate(action.startDate),
-        isaCancellationDate: isaCancellationDate(action.startDate),
+        expectedExitDate: expectedExitDate(action.startDate).toISOString(),
+        isaCancellationDate: isaCancellationDate(action.startDate).toISOString(),
       }
     default: return state
   }

@@ -20,8 +20,8 @@ export const reducer = (state = initialState, action) => {
     case actionTypes.UPDATE_FORM:
       return {
         ...state,
-        startDate: action.startDate,
-        exitDate: action.exitDate,
+        startDate: new Date(action.startDate).toISOString(),
+        exitDate: new Date(action.exitDate).toISOString(),
         stipendAmount: action.stipendAmount,
         isTakingLaptopStipend: action.isTakingLaptopStipend,
         expectedAnnualSalary: action.expectedAnnualSalary,
