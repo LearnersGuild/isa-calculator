@@ -7,14 +7,14 @@
 2. Install and run:
 
     ```bash
-    npm Install
+    npm install
     npm run dev
     ```
 
 3. If you change the `"reactToolbox"` section of `package.json`, you'll have to run the `toolbox` script.
 
     ```bash
-    npm run toolbox
+    npm run build:theme
     ```
 
 ## Key Dependencies`
