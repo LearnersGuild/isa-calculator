@@ -1,5 +1,10 @@
 # isa-calculator
 
+[ ![Codeship Status for LearnersGuild/isa-calculator](https://app.codeship.com/projects/b0c9bcf0-4c11-0135-ee02-4ae1e0c245c3/status?branch=master)](https://app.codeship.com/projects/232862)
+[![Code Climate GPA](https://codeclimate.com/github/LearnersGuild/isa-calculator/badges/gpa.svg)](https://codeclimate.com/github/LearnersGuild/isa-calculator)
+[![Code Climate Issue Count](https://codeclimate.com/github/LearnersGuild/isa-calculator/badges/issue_count.svg)](https://codeclimate.com/github/LearnersGuild/isa-calculator)
+[![Test Coverage](https://codeclimate.com/github/LearnersGuild/isa-calculator/badges/coverage.svg)](https://codeclimate.com/github/LearnersGuild/isa-calculator/coverage)
+
 ## Getting Started
 
 1. Fork and clone the repository.
