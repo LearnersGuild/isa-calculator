@@ -30,14 +30,14 @@ test('src/holidays', t => {
       ttt.plan(1)
       const nextNewYears = newYearsDay()
       const expected = momentDayOnly(new Date((new Date()).getFullYear() + 1, 0, 1))
-      ttt.true(nextNewYears.isSame(expected), 'should be the next New Year\'s Day')
+      ttt.true(momentDayOnly(nextNewYears).isSame(expected), 'should be the next New Year\'s Day')
     })
 
     tt.test('returns New Year\'s day that follows the given date', ttt => {
       ttt.plan(1)
       const nextNewYears = newYearsDay('2016-07-11')
       const expected = momentDayOnly('2017-01-01')
-      ttt.true(nextNewYears.isSame(expected), 'should be the New Year\'s Day following the given date')
+      ttt.true(momentDayOnly(nextNewYears).isSame(expected), 'should be the New Year\'s Day following the given date')
     })
   })
 
@@ -56,7 +56,7 @@ test('src/holidays', t => {
         momentDayOnly('2017-01-16'),
         momentDayOnly('2020-01-20')
       ]
-      nexts.forEach((m, i) => ttt.true(m.isSame(expecteds[i]), 'should be next MLK Jr. Day'))
+      nexts.forEach((d, i) => ttt.true(momentDayOnly(d).isSame(expecteds[i]), 'should be next MLK Jr. Day'))
     })
   })
 
@@ -75,7 +75,7 @@ test('src/holidays', t => {
         momentDayOnly('2017-02-15'),
         momentDayOnly('2020-02-14'), // the 15th would have been a Saturday
       ]
-      nexts.forEach((m, i) => ttt.true(m.isSame(expecteds[i]), 'should be next President\'s Day'))
+      nexts.forEach((d, i) => ttt.true(momentDayOnly(d).isSame(expecteds[i]), 'should be next President\'s Day'))
     })
   })
 
@@ -94,7 +94,7 @@ test('src/holidays', t => {
         momentDayOnly('2017-03-31'),
         momentDayOnly('2020-03-31'),
       ]
-      nexts.forEach((m, i) => ttt.true(m.isSame(expecteds[i]), 'should be next Cesar Chavez Day'))
+      nexts.forEach((d, i) => ttt.true(momentDayOnly(d).isSame(expecteds[i]), 'should be next Cesar Chavez Day'))
     })
   })
 
@@ -113,7 +113,7 @@ test('src/holidays', t => {
         momentDayOnly('2017-05-29'),
         momentDayOnly('2020-05-25'),
       ]
-      nexts.forEach((m, i) => ttt.true(m.isSame(expecteds[i]), 'should be next Memorial Day'))
+      nexts.forEach((d, i) => ttt.true(momentDayOnly(d).isSame(expecteds[i]), 'should be next Memorial Day'))
     })
   })
 
@@ -132,7 +132,7 @@ test('src/holidays', t => {
         momentDayOnly('2017-07-04'),
         momentDayOnly('2020-07-03'), // the 4th would have been a Saturday
       ]
-      nexts.forEach((m, i) => ttt.true(m.isSame(expecteds[i]), 'should be next Independence Day'))
+      nexts.forEach((d, i) => ttt.true(momentDayOnly(d).isSame(expecteds[i]), 'should be next Independence Day'))
     })
   })
 
@@ -151,7 +151,7 @@ test('src/holidays', t => {
         momentDayOnly('2016-09-05'),
         momentDayOnly('2020-09-07'),
       ]
-      nexts.forEach((m, i) => ttt.true(m.isSame(expecteds[i]), 'should be next Labor Day'))
+      nexts.forEach((d, i) => ttt.true(momentDayOnly(d).isSame(expecteds[i]), 'should be next Labor Day'))
     })
   })
 
@@ -170,7 +170,7 @@ test('src/holidays', t => {
         momentDayOnly('2016-10-10'),
         momentDayOnly('2020-10-12'),
       ]
-      nexts.forEach((m, i) => ttt.true(m.isSame(expecteds[i]), 'should be next Indigenous People\'s Day'))
+      nexts.forEach((d, i) => ttt.true(momentDayOnly(d).isSame(expecteds[i]), 'should be next Indigenous People\'s Day'))
     })
   })
 
@@ -189,7 +189,7 @@ test('src/holidays', t => {
         momentDayOnly('2016-11-11'),
         momentDayOnly('2020-11-11'),
       ]
-      nexts.forEach((m, i) => ttt.true(m.isSame(expecteds[i]), 'should be next Veterans Day'))
+      nexts.forEach((d, i) => ttt.true(momentDayOnly(d).isSame(expecteds[i]), 'should be next Veterans Day'))
     })
   })
 
@@ -208,7 +208,7 @@ test('src/holidays', t => {
         momentDayOnly('2016-11-24'),
         momentDayOnly('2020-11-26'),
       ]
-      nexts.forEach((m, i) => ttt.true(m.isSame(expecteds[i]), 'should be next Thanksgiving Day'))
+      nexts.forEach((d, i) => ttt.true(momentDayOnly(d).isSame(expecteds[i]), 'should be next Thanksgiving Day'))
     })
   })
 
@@ -227,7 +227,7 @@ test('src/holidays', t => {
         momentDayOnly('2016-11-25'),
         momentDayOnly('2020-11-27'),
       ]
-      nexts.forEach((m, i) => ttt.true(m.isSame(expecteds[i]), 'should be next Thanksgiving Friday'))
+      nexts.forEach((d, i) => ttt.true(momentDayOnly(d).isSame(expecteds[i]), 'should be next Thanksgiving Friday'))
     })
   })
 
@@ -246,7 +246,7 @@ test('src/holidays', t => {
         momentDayOnly('2016-12-23'), // the 24th would be a Saturday
         momentDayOnly('2020-12-24'),
       ]
-      nexts.forEach((m, i) => ttt.true(m.isSame(expecteds[i]), 'should be next Christmas Eve'))
+      nexts.forEach((d, i) => ttt.true(momentDayOnly(d).isSame(expecteds[i]), 'should be next Christmas Eve'))
     })
   })
 
@@ -265,7 +265,7 @@ test('src/holidays', t => {
         momentDayOnly('2016-12-26'), // the 25th would be a Sunday
         momentDayOnly('2020-12-25'),
       ]
-      nexts.forEach((m, i) => ttt.true(m.isSame(expecteds[i]), 'should be next Christmas Day'))
+      nexts.forEach((d, i) => ttt.true(momentDayOnly(d).isSame(expecteds[i]), 'should be next Christmas Day'))
     })
   })
 

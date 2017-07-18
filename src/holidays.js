@@ -21,7 +21,7 @@ const _holidayForDate = (month, dayOfMonth, date = new Date()) => {
   // ensure that we get the _next_ one
   output.add(output > input ? 0 : 1, 'years')
 
-  return _ensureWeekday(output)
+  return _ensureWeekday(output).toDate()
 }
 
 const _holidayForNthWeekdayOccurence = (month, n, day, date = new Date()) => {
@@ -39,7 +39,7 @@ const _holidayForNthWeekdayOccurence = (month, n, day, date = new Date()) => {
   // ensure that we get the _next_ one
   output.add(output > input ? 0 : 52, 'weeks')
 
-  return output
+  return output.toDate()
 }
 
 // New Year’s Day	                      January 1
@@ -48,6 +48,7 @@ export const newYearsDay = (date = new Date()) => {
     .add(1, 'year')
     .month(0)
     .date(1)
+    .toDate()
 }
 
 // Birthday of Martin Luther King, Jr.	Third Monday in January
@@ -61,7 +62,7 @@ export const cesarChavezDay = date => _holidayForDate(2, 31, date)
 
 // Memorial Day	                        Last Monday in May
 export const memorialDay = date => {
-  const memDay = _holidayForNthWeekdayOccurence(4, 4, 1, date)
+  const memDay = momentDayOnly(_holidayForNthWeekdayOccurence(4, 4, 1, date))
 
   // if there are 5 Mondays, add a week
   memDay.add(memDay.date() < 25 ? 1 : 0, 'weeks')
@@ -104,21 +105,25 @@ const _holidaysAfter = date => {
     thanksgivingFriday(date),
     christmasEve(date),
     christmasDay(date),
-  ].sort((a, b) => {
-    if (a.isBefore(b)) {
-      return -1
-    }
-    if (b.isBefore(a)) {
-      return 1
-    }
-    return 0
-  })
+  ]
+    .map(d => momentDayOnly(d))
+    .sort((a, b) => {
+      if (a.isBefore(b)) {
+        return -1
+      }
+      if (b.isBefore(a)) {
+        return 1
+      }
+      return 0
+    })
+    .map(m => m.toDate())
 }
 
 export const holidaysBetween = (startDate, endDate) => {
   const start = momentDayOnly(startDate)
   const end = momentDayOnly(endDate)
   return _holidaysAfter(start)
+    .map(day => momentDayOnly(day))
     .filter(day => day.isSameOrAfter(start) && day.isSameOrBefore(end))
     .map(day => day.toDate())
 }
@@ -127,6 +132,6 @@ export const isHoliday = (date = new Date()) => {
   const input = momentDayOnly(date)
   const yesterday = input.clone().subtract(1, 'day')
   const holidays = _holidaysAfter(yesterday)
-  const foundHoliday = holidays.find(d => d.isSame(input))
+  const foundHoliday = holidays.find(d => momentDayOnly(d).isSame(input))
   return Boolean(foundHoliday)
 }

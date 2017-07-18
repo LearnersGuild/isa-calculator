@@ -19,16 +19,17 @@ const _lastFullWeekOfMonthMonday = (month, date = new Date()) => {
   // ensure that we get the _next_ one
   output.add(output > input ? 0 : 52, 'weeks')
 
-  return output
+  return output.toDate()
 }
 
 const _weekdaysForMonday = mon => {
+  const m = momentDayOnly(mon)
   return [
-    mon,
-    mon.clone().add(1, 'days'),
-    mon.clone().add(2, 'days'),
-    mon.clone().add(3, 'days'),
-    mon.clone().add(4, 'days'),
+    m.toDate(),
+    m.clone().add(1, 'days').toDate(),
+    m.clone().add(2, 'days').toDate(),
+    m.clone().add(3, 'days').toDate(),
+    m.clone().add(4, 'days').toDate(),
   ]
 }
 
@@ -60,14 +61,15 @@ export const breakWeekDaysBetween = (startDate, endDate) => {
   const start = momentDayOnly(startDate)
   const end = momentDayOnly(endDate)
   return _breakWeekDaysAfter(start)
-    .filter(day => day.isSameOrAfter(start) && day.isSameOrBefore(end))
-    .map(day => day.toDate())
+    .map(day => momentDayOnly(day))
+    .filter(m => m.isSameOrAfter(start) && m.isSameOrBefore(end))
+    .map(m => m.toDate())
 }
 
 export const isDuringBreakWeek = (date = new Date()) => {
   const input = momentDayOnly(date)
   const lastWeek = input.clone().subtract(1, 'week')
   const breakWeekDays = _breakWeekDaysAfter(lastWeek)
-  const foundBreakWeekDay = breakWeekDays.find(d => d.isSame(input))
+  const foundBreakWeekDay = breakWeekDays.find(d => momentDayOnly(d).isSame(input))
   return Boolean(foundBreakWeekDay)
 }

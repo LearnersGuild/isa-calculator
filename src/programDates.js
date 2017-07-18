@@ -34,7 +34,7 @@ const _legacyStartDate = date => {
   return null
 }
 
-export const startDate = (date = new Date()) => {
+export const nextStartDate = (date = new Date()) => {
   const input = momentDayOnly(date)
   if (input.isBefore(_legacyStartDates[_legacyStartDates.length - 1])) {
     return _legacyStartDate(date)
@@ -55,9 +55,9 @@ export const startDate = (date = new Date()) => {
     output.add(1, 'day')
   }
 
-  return output
+  return output.toDate()
 }
-export const defaultStartDate = startDate()
+export const defaultStartDate = nextStartDate()
 
 export const MAX_PROGRAM_WEEKS = 40
 export const CANCELLATION_WEEKS = 5
@@ -67,8 +67,8 @@ const _numBreakWeeks = (startDate, weeks) => {
   const end = start.clone().add(weeks, 'weeks')
 
   let numBreaks = 0
-  numBreaks += summerBreakWeekMonday(start).isBetween(start, end) ? 1 : 0
-  numBreaks += winterBreakWeekMonday(start).isBetween(start, end) ? 1 : 0
+  numBreaks += momentDayOnly(summerBreakWeekMonday(start)).isBetween(start, end) ? 1 : 0
+  numBreaks += momentDayOnly(winterBreakWeekMonday(start)).isBetween(start, end) ? 1 : 0
 
   return numBreaks
 }

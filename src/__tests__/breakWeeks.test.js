@@ -21,14 +21,14 @@ test('src/breakWeeks', t => {
       ttt.plan(1)
       const mon = summerBreakWeekMonday('2017-02-27')
       const expected = momentDayOnly('2017-06-12')
-      ttt.true(mon.isSame(expected), 'should be 2017-06-12')
+      ttt.true(momentDayOnly(mon).isSame(expected), 'should be 2017-06-12')
     })
 
     tt.test('returns Monday of last fully-contained week in June', ttt => {
       ttt.plan(1)
       const mon = summerBreakWeekMonday('2020-01-06')
       const expected = momentDayOnly('2020-06-22')
-      ttt.true(mon.isSame(expected), 'should be the Monday of the last fully-contained week in June')
+      ttt.true(momentDayOnly(mon).isSame(expected), 'should be the Monday of the last fully-contained week in June')
     })
   })
 
@@ -45,7 +45,7 @@ test('src/breakWeeks', t => {
         momentDayOnly('2017-06-15'),
         momentDayOnly('2017-06-16'),
       ]
-      days.forEach((day, i) => ttt.true(day.isSame(expected[i]), 'should be the week of 2017-06-12'))
+      days.forEach((day, i) => ttt.true(momentDayOnly(day).isSame(expected[i]), 'should be the week of 2017-06-12'))
     })
 
     tt.test('returns last fully-contained week in June', ttt => {
@@ -58,7 +58,7 @@ test('src/breakWeeks', t => {
         momentDayOnly('2018-06-28'),
         momentDayOnly('2018-06-29'),
       ]
-      days.forEach((day, i) => ttt.true(day.isSame(expected[i]), 'should be the last fully-contained week in June'))
+      days.forEach((day, i) => ttt.true(momentDayOnly(day).isSame(expected[i]), 'should be the last fully-contained week in June'))
     })
   })
 
@@ -69,7 +69,7 @@ test('src/breakWeeks', t => {
       ttt.plan(1)
       const mon = winterBreakWeekMonday('2016-07-11')
       const expected = momentDayOnly('2016-12-26')
-      ttt.true(mon.isSame(expected), 'should be the Monday of the last fully-contained week in December')
+      ttt.true(momentDayOnly(mon).isSame(expected), 'should be the Monday of the last fully-contained week in December')
     })
   })
 
@@ -86,7 +86,7 @@ test('src/breakWeeks', t => {
         momentDayOnly('2020-12-24'),
         momentDayOnly('2020-12-25'),
       ]
-      days.forEach((day, i) => ttt.true(day.isSame(expected[i]), 'should be the last fully-contained week in December'))
+      days.forEach((day, i) => ttt.true(momentDayOnly(day).isSame(expected[i]), 'should be the last fully-contained week in December'))
     })
   })
 
