@@ -1,0 +1,44 @@
+import {
+  isaSessionEndDate,
+  isaSessionStartDate,
+  momentDayOnly,
+  numDaysInISASession,
+  openDaysBetween,
+} from '@learnersguild/guild-dates'
+
+export const ISA_NUM_SESSIONS = 5
+export const ISA_PAYMENT_TERM_NUM_MONTHS = 36
+
+// --- program
+export const PROGRAM_COST = 29750
+export const PROGRAM_REBATE_AMOUNT = 4250
+export const PROGRAM_ISA_MAX_PERCENTAGE = 0.125 // 12.5 %
+export const SESSION_ISA_MAX_PERCENTAGE = PROGRAM_ISA_MAX_PERCENTAGE / ISA_NUM_SESSIONS
+export const SESSION_COMPLETION_THRESHOLD_PERCENTAGE = 0.6 // 60%
+
+export const isaSessionISAPercentage = (startDate, exitDate, sessionIndex) => {
+  const sessionStart = momentDayOnly(isaSessionStartDate(startDate, sessionIndex))
+  const exit = momentDayOnly(exitDate)
+  const numSessionDays = numDaysInISASession(startDate, sessionIndex)
+  const numCompletedDays = Math.min(openDaysBetween(sessionStart, exit).length, numSessionDays)
+  const completionPct = (numCompletedDays / numSessionDays)
+  if (completionPct >= SESSION_COMPLETION_THRESHOLD_PERCENTAGE) {
+    return SESSION_ISA_MAX_PERCENTAGE
+  }
+  return completionPct * SESSION_ISA_MAX_PERCENTAGE
+}
+
+const _isaSessionsISAPercentages = (startDate, exitDate) => {
+  return Array.from(Array(ISA_NUM_SESSIONS).keys())
+    .map(sessionIndex => isaSessionISAPercentage(startDate, exitDate, sessionIndex))
+}
+
+export const isaProgramISAPercentage = (startDate, exitDate) => {
+  return _isaSessionsISAPercentages(startDate, exitDate)
+    .reduce((sum, sessionPct) => sum + sessionPct, 0)
+}
+
+// --- living fund
+export const LIVING_FUND_STIPEND_AMOUNT = 13846
+export const LIVING_FUND_ISA_MAX_PERCENTAGE = 0.085 // 8.5%
+export const LAPTOP_STIPEND_AMOUNT = 1846
