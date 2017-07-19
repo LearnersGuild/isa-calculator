@@ -16,6 +16,7 @@ import {
   isaSessionISAPercentage,
   isaProgramISAPercentage,
   isaProgramFundingAmount,
+  isaProgramPaymentCap,
   isaProgramRebateAmount,
 } from '../index'
 
@@ -76,6 +77,19 @@ test('isacalc/index', t => {
       const fundingAmount = isaProgramFundingAmount(startDate, exitDate)
       const expectedAmount = SESSION_COST * 3 + (15 / 34 * SESSION_COST)
       ttt.equal(fundingAmount, expectedAmount, 'should be cost of 3 sessions plus ([completed days in 4th session] / [num days in 4th session] * 100)% cost of a 4th')
+    })
+  })
+
+  t.test('isaProgramPaymentCap', tt => {
+    tt.test('throws if the given dates are not dates', throwsIfInvalidDates(isaProgramPaymentCap))
+
+    tt.test('returns 2x the funding amount', ttt => {
+      ttt.plan(1)
+      const startDate = new Date('2016-11-28')
+      const exitDate = momentDayOnly(expectedExitDate(startDate)).subtract(2, 'weeks').toDate()
+      const fundingAmount = isaProgramFundingAmount(startDate, exitDate)
+      const paymentCap = isaProgramPaymentCap(startDate, exitDate)
+      ttt.equal(paymentCap, 2 * fundingAmount, 'should be 2x the funding amount')
     })
   })
 
