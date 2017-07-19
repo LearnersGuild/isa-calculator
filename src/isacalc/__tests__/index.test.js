@@ -9,9 +9,11 @@ import {
 
 import {
   PROGRAM_ISA_MAX_PERCENTAGE,
+  PROGRAM_REBATE_AMOUNT,
   SESSION_ISA_MAX_PERCENTAGE,
   isaSessionISAPercentage,
   isaProgramISAPercentage,
+  isaRebateAmount,
 } from '../index'
 
 test('isacalc/index', t => {
@@ -50,6 +52,26 @@ test('isacalc/index', t => {
       const programPct = isaProgramISAPercentage(startDate, exitDate)
       const expectedPct = (3 * SESSION_ISA_MAX_PERCENTAGE) + (15 / 34 * SESSION_ISA_MAX_PERCENTAGE)
       ttt.equal(programPct, expectedPct, 'should be 3 sessions plus ([completed days in 4th session] / [num days in 4th session] * 100)% of a 4th')
+    })
+  })
+
+  t.test('isaRebateAmount', tt => {
+    tt.test('throws if the given dates are not dates', throwsIfInvalidDates(isaRebateAmount))
+
+    tt.test('returns PROGRAM_REBATE_AMOUNT if stayed for close-to full program', ttt => {
+      ttt.plan(1)
+      const startDate = new Date('2016-11-28')
+      const exitDate = momentDayOnly(expectedExitDate(startDate)).subtract(2, 'weeks').toDate()
+      const rebate = isaRebateAmount(startDate, exitDate)
+      ttt.equal(rebate, PROGRAM_REBATE_AMOUNT, 'should be PROGRAM_REBATE_AMOUNT')
+    })
+
+    tt.test('returns 0 if stayed < 4.6 full sessions', ttt => {
+      ttt.plan(1)
+      const startDate = new Date('2016-11-28')
+      const exitDate = momentDayOnly(expectedExitDate(startDate)).subtract(5, 'weeks').toDate()
+      const rebate = isaRebateAmount(startDate, exitDate)
+      ttt.equal(rebate, 0)
     })
   })
 })
