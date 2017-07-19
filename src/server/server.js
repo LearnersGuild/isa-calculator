@@ -27,7 +27,7 @@ export default () => {
         if (err) {
           throw err
         }
-        console.log(`🌎  Listening on port ${port}`)
+        console.info(`🌎  Listening on port ${port}`)
       })
     })
 }

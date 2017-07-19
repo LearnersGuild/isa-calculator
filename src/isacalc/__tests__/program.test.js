@@ -31,7 +31,7 @@ test('isacalc/program', t => {
 
     tt.test('returns pro-rated amount of SESSION_ISA_MAX_PERCENTAGE if session < 60% completed', ttt => {
       ttt.plan(1)
-      const sessionPct = isaSessionISAPercentage(new Date('2016-11-28'), new Date('2017-04-28'), 2)
+      const sessionPct = isaSessionISAPercentage(new Date('2016-11-28'), new Date('2017-04-27'), 2)
       const expectedPct = (23 / 39) * SESSION_ISA_MAX_PERCENTAGE
       ttt.equal(sessionPct, expectedPct, 'should be pro-rated amount of SESSION_ISA_MAX_PERCENTAGE')
     })
