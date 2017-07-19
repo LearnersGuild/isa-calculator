@@ -10,6 +10,8 @@ import DatePicker from 'react-toolbox/lib/date_picker/DatePicker'
 import Input from 'react-toolbox/lib/input/Input'
 import Switch from 'react-toolbox/lib/switch/Switch'
 
+import {formatDate} from '@learnersguild/guild-dates'
+
 import {
   updateStartDate,
   updateExitDate,
@@ -17,7 +19,6 @@ import {
   updateIsTakingLaptopStipend,
   updateExpectedAnnualSalary,
 } from '../store/form'
-import {formatDate} from '../src/util'
 
 import cardStyle from './cardStyle'
 

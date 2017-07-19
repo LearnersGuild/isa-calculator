@@ -1,10 +1,11 @@
-import {holidaysBetween} from '../src/holidays'
-import {breakWeekDaysBetween} from '../src/breakWeeks'
 import {
-  stipendPaymentDatesBetween,
-  defaultStartDate,
+  breakWeekDaysBetween,
   defaultExpectedExitDate,
-} from '../src/programDates'
+  defaultStartDate,
+  holidaysBetween,
+  stipendPaymentDatesBetween,
+} from '@learnersguild/guild-dates'
+
 import {actionTypes} from './form'
 
 const _dateTypeTagger = type => {

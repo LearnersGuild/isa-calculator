@@ -3,7 +3,7 @@ import {
   isaCancellationDate,
   defaultExpectedExitDate,
   defaultISACancellationDate,
-} from '../src/programDates'
+} from '@learnersguild/guild-dates'
 import {actionTypes} from './form'
 
 const initialState = {

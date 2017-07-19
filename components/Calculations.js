@@ -7,7 +7,8 @@ import CardText from 'react-toolbox/lib/card/CardText'
 import CardTitle from 'react-toolbox/lib/card/CardTitle'
 import Input from 'react-toolbox/lib/input/Input'
 
-import {formatDate} from '../src/util'
+import {formatDate} from '@learnersguild/guild-dates'
+
 import cardStyle from './cardStyle'
 
 class Calculations extends Component {

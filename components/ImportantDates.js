@@ -7,7 +7,8 @@ import CardTitle from 'react-toolbox/lib/card/CardTitle'
 import List from 'react-toolbox/lib/list/List'
 import ListItem from 'react-toolbox/lib/list/ListItem'
 
-import {formatDate} from '../src/util'
+import {formatDate} from '@learnersguild/guild-dates'
+
 import cardStyle from './cardStyle'
 
 const iconForType = type => {

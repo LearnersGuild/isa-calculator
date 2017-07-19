@@ -2,7 +2,7 @@ import {
   expectedExitDate,
   defaultStartDate,
   defaultExpectedExitDate,
-} from '../src/programDates'
+} from '@learnersguild/guild-dates'
 
 const initialState = {
   startDate: defaultStartDate.toISOString(),
