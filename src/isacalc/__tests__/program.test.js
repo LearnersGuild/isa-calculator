@@ -3,7 +3,6 @@ import test from 'tape'
 import {
   expectedExitDate,
   momentDayOnly,
-  numDaysInISASession,
   throwsIfInvalidDates,
 } from '@learnersguild/guild-dates'
 

@@ -1,5 +1,4 @@
 import {
-  isaSessionEndDate,
   isaSessionStartDate,
   momentDayOnly,
   numDaysInISASession,
