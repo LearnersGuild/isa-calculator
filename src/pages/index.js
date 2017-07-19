@@ -9,7 +9,7 @@ import ThemeProvider from 'react-toolbox/lib/ThemeProvider'
 
 import store from '../store'
 import theme from '../static/theme'
-import iconsMetadata from '../static/icons-metadata.json'
+import iconsMetadata from '../static/icons-metadata'
 import Calculations from '../components/Calculations'
 import Form from '../components/Form'
 import ImportantDates from '../components/ImportantDates'

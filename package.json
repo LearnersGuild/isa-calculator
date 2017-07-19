@@ -6,7 +6,7 @@
   },
   "scripts": {
     "dev": "node src/server",
-    "build:icons": "mkdir -p src/static && curl -s https://brand.learnersguild.org/icontags > src/static/icons-metadata.json",
+    "build:icons": "mkdir -p src/static && curl -s https://brand.learnersguild.org/icontags > src/static/icons-metadata.js",
     "build:next": "./node_modules/.bin/next build src",
     "build:theme": "./node_modules/.bin/react-toolbox-themr",
     "build": "npm run build:icons && npm run build:theme && npm run build:next",
