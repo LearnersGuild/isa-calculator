@@ -8,12 +8,15 @@ import {
 } from '@learnersguild/guild-dates'
 
 import {
+  PROGRAM_COST,
   PROGRAM_ISA_MAX_PERCENTAGE,
   PROGRAM_REBATE_AMOUNT,
+  SESSION_COST,
   SESSION_ISA_MAX_PERCENTAGE,
   isaSessionISAPercentage,
   isaProgramISAPercentage,
-  isaRebateAmount,
+  isaProgramFundingAmount,
+  isaProgramRebateAmount,
 } from '../index'
 
 test('isacalc/index', t => {
@@ -55,14 +58,35 @@ test('isacalc/index', t => {
     })
   })
 
-  t.test('isaRebateAmount', tt => {
-    tt.test('throws if the given dates are not dates', throwsIfInvalidDates(isaRebateAmount))
+  t.test('isaProgramFundingAmount', tt => {
+    tt.test('throws if the given dates are not dates', throwsIfInvalidDates(isaProgramFundingAmount))
+
+    tt.test('returns PROGRAM_COST if stayed for close-to full program', ttt => {
+      ttt.plan(1)
+      const startDate = new Date('2016-11-28')
+      const exitDate = momentDayOnly(expectedExitDate(startDate)).subtract(2, 'weeks').toDate()
+      const fundingAmount = isaProgramFundingAmount(startDate, exitDate)
+      ttt.equal(fundingAmount, PROGRAM_COST, 'should be PROGRAM_COST')
+    })
+
+    tt.test('returns < PROGRAM_COST if left early', ttt => {
+      ttt.plan(1)
+      const startDate = new Date('2016-11-28')
+      const exitDate = new Date('2017-06-19')
+      const fundingAmount = isaProgramFundingAmount(startDate, exitDate)
+      const expectedAmount = SESSION_COST * 3 + (15 / 34 * SESSION_COST)
+      ttt.equal(fundingAmount, expectedAmount, 'should be cost of 3 sessions plus ([completed days in 4th session] / [num days in 4th session] * 100)% cost of a 4th')
+    })
+  })
+
+  t.test('isaProgramRebateAmount', tt => {
+    tt.test('throws if the given dates are not dates', throwsIfInvalidDates(isaProgramRebateAmount))
 
     tt.test('returns PROGRAM_REBATE_AMOUNT if stayed for close-to full program', ttt => {
       ttt.plan(1)
       const startDate = new Date('2016-11-28')
       const exitDate = momentDayOnly(expectedExitDate(startDate)).subtract(2, 'weeks').toDate()
-      const rebate = isaRebateAmount(startDate, exitDate)
+      const rebate = isaProgramRebateAmount(startDate, exitDate)
       ttt.equal(rebate, PROGRAM_REBATE_AMOUNT, 'should be PROGRAM_REBATE_AMOUNT')
     })
 
@@ -70,7 +94,7 @@ test('isacalc/index', t => {
       ttt.plan(1)
       const startDate = new Date('2016-11-28')
       const exitDate = momentDayOnly(expectedExitDate(startDate)).subtract(5, 'weeks').toDate()
-      const rebate = isaRebateAmount(startDate, exitDate)
+      const rebate = isaProgramRebateAmount(startDate, exitDate)
       ttt.equal(rebate, 0)
     })
   })
