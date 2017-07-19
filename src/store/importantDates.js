@@ -1,8 +1,7 @@
 import {
-  breakWeekDaysBetween,
+  closedDaysBetween,
   defaultExpectedExitDate,
   defaultStartDate,
-  holidaysBetween,
   stipendPaymentDatesBetween,
 } from '@learnersguild/guild-dates'
 
@@ -16,16 +15,13 @@ const _dateTypeTagger = type => {
 }
 
 const _stateFromStartAndEndDates = (startDate, exitDate) => {
-  const encounteredHolidays = holidaysBetween(startDate, exitDate)
-    .reduce(_dateTypeTagger('holiday'), {})
-  const encounteredBreakWeekDays = breakWeekDaysBetween(startDate, exitDate)
+  const closedDays = closedDaysBetween(startDate, exitDate)
     .reduce(_dateTypeTagger('holiday'), {})
   const stipendPaymentDates = stipendPaymentDatesBetween(startDate, exitDate)
     .reduce(_dateTypeTagger('stipendPayment'), {})
 
   const merged = {
-    ...encounteredHolidays,
-    ...encounteredBreakWeekDays,
+    ...closedDays,
     ...stipendPaymentDates,
   }
 
