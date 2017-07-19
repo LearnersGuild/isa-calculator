@@ -18,9 +18,9 @@ import {
   isaProgramFundingAmount,
   isaProgramPaymentCap,
   isaProgramRebateAmount,
-} from '../index'
+} from '../program'
 
-test('isacalc/index', t => {
+test('isacalc/program', t => {
   t.test('isaSessionISAPercentage', tt => {
     tt.test('throws if the given dates are not dates', throwsIfInvalidDates(isaSessionISAPercentage))
 
