@@ -7,7 +7,7 @@
 coverage
 dist
 node_modules
-static
+src/static
 tmp
 *.env
 *.log
