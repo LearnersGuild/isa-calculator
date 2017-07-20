@@ -1,5 +1,4 @@
 import {
-  expectedExitDate,
   defaultStartDate,
   defaultExpectedExitDate,
 } from '@learnersguild/guild-dates'
@@ -8,7 +7,7 @@ import {
   LIVING_FUND_STIPEND_AMOUNT,
 } from '../isacalc'
 
-const initialState = {
+export const defaultFormInputs = {
   startDate: defaultStartDate.toISOString(),
   exitDate: defaultExpectedExitDate.toISOString(),
   stipendAmount: LIVING_FUND_STIPEND_AMOUNT,
@@ -16,52 +15,60 @@ const initialState = {
   expectedAnnualSalary: 90000,
 }
 
+const initialState = {
+  ...defaultFormInputs,
+  recalculateTimer: null,
+}
+
 export const actionTypes = {
-  UPDATE_START_DATE: 'UPDATE_START_DATE',
-  UPDATE_EXIT_DATE: 'UPDATE_EXIT_DATE',
-  UPDATE_STIPEND_AMOUNT: 'UPDATE_STIPEND_AMOUNT',
-  UPDATE_IS_TAKING_LAPTOP_STIPEND: 'UPDATE_IS_TAKING_LAPTOP_STIPEND',
-  UPDATE_EXPECTED_ANNUAL_SALARY: 'UPDATE_EXPECTED_ANNUAL_SALARY',
+  UPDATE_FORM: 'UPDATE_FORM',
+  STOP_EDITING: 'STOP_EDITING',
+  RECALCULATE: 'RECALCULATE',
 }
 
 export const reducer = (state = initialState, action) => {
+  const {
+    startDate,
+    exitDate,
+    stipendAmount,
+    isTakingLaptopStipend,
+    expectedAnnualSalary,
+    recalculateTimer,
+  } = action
   switch (action.type) {
-    case actionTypes.UPDATE_START_DATE:
-      return {...state, startDate: new Date(action.startDate).toISOString()}
-    case actionTypes.UPDATE_EXIT_DATE:
-      return {...state, exitDate: new Date(action.exitDate).toISOString()}
-    case actionTypes.UPDATE_STIPEND_AMOUNT:
-      return {...state, stipendAmount: action.stipendAmount}
-    case actionTypes.UPDATE_IS_TAKING_LAPTOP_STIPEND:
-      return {...state, isTakingLaptopStipend: action.isTakingLaptopStipend}
-    case actionTypes.UPDATE_EXPECTED_ANNUAL_SALARY:
-      return {...state, expectedAnnualSalary: action.expectedAnnualSalary}
+    case actionTypes.UPDATE_FORM:
+      return {
+        ...state,
+        startDate: new Date(startDate).toISOString(),
+        exitDate: new Date(exitDate).toISOString(),
+        stipendAmount: Number(stipendAmount),
+        isTakingLaptopStipend,
+        expectedAnnualSalary: Number(expectedAnnualSalary),
+        recalculateTimer,
+      }
+    case actionTypes.RECALCULATE:
+      return {
+        ...state,
+        recalculateTimer,
+      }
     default: return state
   }
 }
 
-export const updateStartDate = startDate => (dispatch, getState) => {
-  dispatch({type: actionTypes.UPDATE_START_DATE, startDate})
-  const exitDate = expectedExitDate(startDate).toISOString()
-  dispatch({type: actionTypes.UPDATE_EXIT_DATE, ...getState().form, startDate, exitDate})
+export const updateForm = formData => (dispatch, getState) => {
+  const {form} = getState()
+  // since this is a "real time" form (no submit button), we only want to
+  // recalculate once the user is completely done editing the values, so we wait
+  // half a second before dispatching the RECALCULATE action
+  clearTimeout(form.recalculateTimer)
+  const recalculateTimer = setTimeout(() => {
+    dispatch({...formData, recalculateTimer: null, type: actionTypes.RECALCULATE})
+  }, 500)
+
+  // update the form values immediately
+  dispatch({
+    ...formData,
+    recalculateTimer,
+    type: actionTypes.UPDATE_FORM,
+  })
 }
-export const updateExitDate = exitDate => (dispatch, getState) => dispatch({
-  type: actionTypes.UPDATE_EXIT_DATE,
-  ...getState().form,
-  exitDate,
-})
-export const updateStipendAmount = stipendAmount => (dispatch, getState) => dispatch({
-  type: actionTypes.UPDATE_STIPEND_AMOUNT,
-  ...getState().form,
-  stipendAmount: Number(stipendAmount),
-})
-export const updateIsTakingLaptopStipend = isTakingLaptopStipend => (dispatch, getState) => dispatch({
-  type: actionTypes.UPDATE_IS_TAKING_LAPTOP_STIPEND,
-  ...getState().form,
-  isTakingLaptopStipend,
-})
-export const updateExpectedAnnualSalary = expectedAnnualSalary => (dispatch, getState) => dispatch({
-  type: actionTypes.UPDATE_EXPECTED_ANNUAL_SALARY,
-  ...getState().form,
-  expectedAnnualSalary: Number(expectedAnnualSalary),
-})

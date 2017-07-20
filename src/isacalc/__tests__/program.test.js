@@ -25,13 +25,13 @@ test('isacalc/program', t => {
 
     tt.test('returns SESSION_ISA_MAX_PERCENTAGE if session > 60% completed', ttt => {
       ttt.plan(1)
-      const sessionPct = isaSessionISAPercentage(new Date('2016-11-28'), new Date('2017-07-07'), 2)
+      const sessionPct = isaSessionISAPercentage(momentDayOnly('2016-11-28'), momentDayOnly('2017-07-07'), 2)
       ttt.equal(sessionPct, SESSION_ISA_MAX_PERCENTAGE, 'should be SESSION_ISA_MAX_PERCENTAGE')
     })
 
     tt.test('returns pro-rated amount of SESSION_ISA_MAX_PERCENTAGE if session < 60% completed', ttt => {
       ttt.plan(1)
-      const sessionPct = isaSessionISAPercentage(new Date('2016-11-28'), new Date('2017-04-27'), 2)
+      const sessionPct = isaSessionISAPercentage(momentDayOnly('2016-11-28'), momentDayOnly('2017-04-27'), 2)
       const expectedPct = (23 / 39) * SESSION_ISA_MAX_PERCENTAGE
       ttt.equal(sessionPct, expectedPct, 'should be pro-rated amount of SESSION_ISA_MAX_PERCENTAGE')
     })
@@ -42,7 +42,7 @@ test('isacalc/program', t => {
 
     tt.test('returns PROGRAM_ISA_MAX_PERCENTAGE if stayed for close-to full program', ttt => {
       ttt.plan(1)
-      const startDate = new Date('2016-11-28')
+      const startDate = momentDayOnly('2016-11-28')
       const exitDate = momentDayOnly(expectedExitDate(startDate)).subtract(2, 'weeks').toDate()
       const programPct = isaProgramISAPercentage(startDate, exitDate)
       ttt.equal(programPct, PROGRAM_ISA_MAX_PERCENTAGE, 'should be PROGRAM_ISA_MAX_PERCENTAGE')
@@ -50,8 +50,8 @@ test('isacalc/program', t => {
 
     tt.test('returns < PROGRAM_ISA_MAX_PERCENTAGE if left early', ttt => {
       ttt.plan(1)
-      const startDate = new Date('2016-11-28')
-      const exitDate = new Date('2017-06-19')
+      const startDate = momentDayOnly('2016-11-28')
+      const exitDate = momentDayOnly('2017-06-19')
       const programPct = isaProgramISAPercentage(startDate, exitDate)
       const expectedPct = (3 * SESSION_ISA_MAX_PERCENTAGE) + (15 / 34 * SESSION_ISA_MAX_PERCENTAGE)
       ttt.equal(programPct, expectedPct, 'should be 3 sessions plus ([completed days in 4th session] / [num days in 4th session] * 100)% of a 4th')
@@ -63,7 +63,7 @@ test('isacalc/program', t => {
 
     tt.test('returns PROGRAM_COST if stayed for close-to full program', ttt => {
       ttt.plan(1)
-      const startDate = new Date('2016-11-28')
+      const startDate = momentDayOnly('2016-11-28')
       const exitDate = momentDayOnly(expectedExitDate(startDate)).subtract(2, 'weeks').toDate()
       const fundingAmount = isaProgramFundingAmount(startDate, exitDate)
       ttt.equal(fundingAmount, PROGRAM_COST, 'should be PROGRAM_COST')
@@ -71,8 +71,8 @@ test('isacalc/program', t => {
 
     tt.test('returns < PROGRAM_COST if left early', ttt => {
       ttt.plan(1)
-      const startDate = new Date('2016-11-28')
-      const exitDate = new Date('2017-06-19')
+      const startDate = momentDayOnly('2016-11-28')
+      const exitDate = momentDayOnly('2017-06-19')
       const fundingAmount = isaProgramFundingAmount(startDate, exitDate)
       const expectedAmount = SESSION_COST * 3 + (15 / 34 * SESSION_COST)
       ttt.equal(fundingAmount, expectedAmount, 'should be cost of 3 sessions plus ([completed days in 4th session] / [num days in 4th session] * 100)% cost of a 4th')
@@ -84,7 +84,7 @@ test('isacalc/program', t => {
 
     tt.test('returns 2x the funding amount', ttt => {
       ttt.plan(1)
-      const startDate = new Date('2016-11-28')
+      const startDate = momentDayOnly('2016-11-28')
       const exitDate = momentDayOnly(expectedExitDate(startDate)).subtract(2, 'weeks').toDate()
       const fundingAmount = isaProgramFundingAmount(startDate, exitDate)
       const paymentCap = isaProgramPaymentCap(startDate, exitDate)
@@ -97,7 +97,7 @@ test('isacalc/program', t => {
 
     tt.test('returns PROGRAM_REBATE_AMOUNT if stayed for close-to full program', ttt => {
       ttt.plan(1)
-      const startDate = new Date('2016-11-28')
+      const startDate = momentDayOnly('2016-11-28')
       const exitDate = momentDayOnly(expectedExitDate(startDate)).subtract(2, 'weeks').toDate()
       const rebate = isaProgramRebateAmount(startDate, exitDate)
       ttt.equal(rebate, PROGRAM_REBATE_AMOUNT, 'should be PROGRAM_REBATE_AMOUNT')
@@ -105,7 +105,7 @@ test('isacalc/program', t => {
 
     tt.test('returns 0 if stayed < 4.6 full sessions', ttt => {
       ttt.plan(1)
-      const startDate = new Date('2016-11-28')
+      const startDate = momentDayOnly('2016-11-28')
       const exitDate = momentDayOnly(expectedExitDate(startDate)).subtract(5, 'weeks').toDate()
       const rebate = isaProgramRebateAmount(startDate, exitDate)
       ttt.equal(rebate, 0)

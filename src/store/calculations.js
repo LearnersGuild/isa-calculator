@@ -1,9 +1,6 @@
 import {
   expectedExitDate,
   isaCancellationDate,
-  defaultExpectedExitDate,
-  defaultISACancellationDate,
-  defaultStartDate,
 } from '@learnersguild/guild-dates'
 
 import {
@@ -15,7 +12,10 @@ import {
   LIVING_FUND_STIPEND_AMOUNT,
 } from '../isacalc'
 
-import {actionTypes} from './form'
+import {
+  actionTypes,
+  defaultFormInputs,
+} from './form'
 
 const totalStipendReceived = (stipendAmount, isTakingLaptopStipend) => {
   const laptopStipendReceived = isTakingLaptopStipend ? LAPTOP_STIPEND_AMOUNT : 0
@@ -30,43 +30,46 @@ const livingFundISAMonthlyPayment = (expectedAnnualSalary, livingFundISAPercenta
   return expectedAnnualSalary * livingFundISAPercentage / 12
 }
 
-const programISAPercentage = isaProgramISAPercentage(defaultStartDate, defaultExpectedExitDate)
-const stipendReceived = totalStipendReceived(LIVING_FUND_STIPEND_AMOUNT, true)
-const livingFundISAPercentage = isaLivingFundISAPercentage(defaultStartDate, defaultExpectedExitDate)
+const programISAPercentage = isaProgramISAPercentage(defaultFormInputs.startDate, defaultFormInputs.exitDate)
+const stipendReceived = totalStipendReceived(LIVING_FUND_STIPEND_AMOUNT, defaultFormInputs.isTakingLaptopStipend)
+const livingFundISAPercentage = isaLivingFundISAPercentage(stipendReceived)
 
 const initialState = {
-  expectedExitDate: defaultExpectedExitDate.toISOString(),
-  isaCancellationDate: defaultISACancellationDate.toISOString(),
+  expectedExitDate: expectedExitDate(defaultFormInputs.startDate).toISOString(),
+  isaCancellationDate: isaCancellationDate(defaultFormInputs.startDate, defaultFormInputs.exitDate),
   programISAPercentage,
-  programISAMonthlyPayment: programISAMonthlyPayment(90000, programISAPercentage),
-  programISAPaymentCap: isaProgramPaymentCap(defaultStartDate, defaultExpectedExitDate),
+  programISAMonthlyPayment: programISAMonthlyPayment(defaultFormInputs.expectedAnnualSalary, programISAPercentage),
+  programISAPaymentCap: isaProgramPaymentCap(defaultFormInputs.startDate, defaultFormInputs.exitDate),
   stipendReceived,
   livingFundISAPercentage,
-  livingFundISAMonthlyPayment: livingFundISAMonthlyPayment(90000, livingFundISAPercentage),
+  livingFundISAMonthlyPayment: livingFundISAMonthlyPayment(defaultFormInputs.expectedAnnualSalary, livingFundISAPercentage),
   livingFundISAPaymentCap: isaLivingFundPaymentCap(stipendReceived),
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.UPDATE_START_DATE:
-    case actionTypes.UPDATE_EXIT_DATE:
-    case actionTypes.UPDATE_STIPEND_AMOUNT:
-    case actionTypes.UPDATE_IS_TAKING_LAPTOP_STIPEND:
-    case actionTypes.UPDATE_EXPECTED_ANNUAL_SALARY: {
-      const programISAPercentage = isaProgramISAPercentage(action.startDate, action.exitDate)
-      const stipendReceived = totalStipendReceived(action.stipendAmount, action.isTakingLaptopStipend)
+    case actionTypes.RECALCULATE: {
+      const {
+        startDate,
+        exitDate,
+        stipendAmount,
+        isTakingLaptopStipend,
+        expectedAnnualSalary,
+      } = action
+      const programISAPercentage = isaProgramISAPercentage(startDate, exitDate)
+      const stipendReceived = totalStipendReceived(stipendAmount, isTakingLaptopStipend)
       const livingFundISAPercentage = isaLivingFundISAPercentage(stipendReceived)
 
       const newState = {
         ...state,
-        expectedExitDate: expectedExitDate(action.startDate).toISOString(),
-        isaCancellationDate: isaCancellationDate(action.startDate).toISOString(),
+        expectedExitDate: expectedExitDate(startDate).toISOString(),
+        isaCancellationDate: isaCancellationDate(startDate).toISOString(),
         programISAPercentage,
-        programISAMonthlyPayment: programISAMonthlyPayment(action.expectedAnnualSalary, programISAPercentage),
-        programISAPaymentCap: isaProgramPaymentCap(action.startDate, action.exitDate),
+        programISAMonthlyPayment: programISAMonthlyPayment(expectedAnnualSalary, programISAPercentage),
+        programISAPaymentCap: isaProgramPaymentCap(startDate, exitDate),
         stipendReceived,
         livingFundISAPercentage,
-        livingFundISAMonthlyPayment: livingFundISAMonthlyPayment(action.expectedAnnualSalary, livingFundISAPercentage),
+        livingFundISAMonthlyPayment: livingFundISAMonthlyPayment(expectedAnnualSalary, livingFundISAPercentage),
         livingFundISAPaymentCap: isaLivingFundPaymentCap(stipendReceived),
       }
       return newState
