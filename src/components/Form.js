@@ -12,13 +12,7 @@ import Switch from 'react-toolbox/lib/switch/Switch'
 
 import {formatDate} from '@learnersguild/guild-dates'
 
-import {
-  updateStartDate,
-  updateExitDate,
-  updateStipendAmount,
-  updateIsTakingLaptopStipend,
-  updateExpectedAnnualSalary,
-} from '../store/form'
+import {updateForm} from '../store/form'
 
 import cardStyle from './cardStyle'
 
@@ -30,15 +24,22 @@ class Form extends Component {
       stipendAmount,
       isTakingLaptopStipend,
       expectedAnnualSalary,
-      onUpdateStartDate,
-      onUpdateExitDate,
-      onUpdateStipendAmount,
-      onUpdateIsTakingLaptopStipend,
-      onUpdateExpectedAnnualSalary,
+      onUpdate,
     } = this.props
 
     const startDate = new Date(startDateStr)
     const exitDate = new Date(exitDateStr)
+
+    const handleUpdate = name => value => {
+      onUpdate({
+        startDate,
+        exitDate,
+        stipendAmount,
+        isTakingLaptopStipend,
+        expectedAnnualSalary,
+        [name]: value,
+      })
+    }
 
     return (
       <Card style={cardStyle}>
@@ -47,7 +48,7 @@ class Form extends Component {
           <DatePicker
             icon="event"
             label="Start Date"
-            onChange={onUpdateStartDate}
+            onChange={handleUpdate('startDate')}
             inputFormat={formatDate}
             value={startDate}
             required
@@ -55,7 +56,7 @@ class Form extends Component {
           <DatePicker
             icon="event"
             label="Exit Date"
-            onChange={onUpdateExitDate}
+            onChange={handleUpdate('exitDate')}
             inputFormat={formatDate}
             value={exitDate}
             required
@@ -64,20 +65,20 @@ class Form extends Component {
             icon="attach_money"
             type="tel"
             label="Living Fund Stipend Amount"
-            onChange={onUpdateStipendAmount}
+            onChange={handleUpdate('stipendAmount')}
             value={stipendAmount}
             required
           />
           <Switch
-            checked={isTakingLaptopStipend}
             label="Taking laptop stipend?"
-            onChange={onUpdateIsTakingLaptopStipend}
+            onChange={handleUpdate('isTakingLaptopStipend')}
+            checked={isTakingLaptopStipend}
           />
           <Input
             icon="attach_money"
             type="tel"
             label="Expected Annual Salary"
-            onChange={onUpdateExpectedAnnualSalary}
+            onChange={handleUpdate('expectedAnnualSalary')}
             value={expectedAnnualSalary}
             required
           />
@@ -88,16 +89,12 @@ class Form extends Component {
 }
 
 Form.propTypes = {
-  onUpdateStartDate: PropTypes.func.isRequired,
-  onUpdateExitDate: PropTypes.func.isRequired,
-  onUpdateStipendAmount: PropTypes.func.isRequired,
-  onUpdateIsTakingLaptopStipend: PropTypes.func.isRequired,
-  onUpdateExpectedAnnualSalary: PropTypes.func.isRequired,
   startDate: PropTypes.string.isRequired,
   exitDate: PropTypes.string.isRequired,
   stipendAmount: PropTypes.number.isRequired,
   isTakingLaptopStipend: PropTypes.bool.isRequired,
   expectedAnnualSalary: PropTypes.number.isRequired,
+  onUpdate: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = ({
@@ -118,11 +115,7 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    onUpdateStartDate: bindActionCreators(updateStartDate, dispatch),
-    onUpdateExitDate: bindActionCreators(updateExitDate, dispatch),
-    onUpdateStipendAmount: bindActionCreators(updateStipendAmount, dispatch),
-    onUpdateIsTakingLaptopStipend: bindActionCreators(updateIsTakingLaptopStipend, dispatch),
-    onUpdateExpectedAnnualSalary: bindActionCreators(updateExpectedAnnualSalary, dispatch),
+    onUpdate: bindActionCreators(updateForm, dispatch),
   }
 }
 
