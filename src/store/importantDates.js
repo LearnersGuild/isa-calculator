@@ -1,11 +1,12 @@
 import {
   closedDaysBetween,
-  defaultExpectedExitDate,
-  defaultStartDate,
   stipendPaymentDatesBetween,
 } from '@learnersguild/guild-dates'
 
-import {actionTypes} from './form'
+import {
+  actionTypes,
+  defaultFormInputs,
+} from './form'
 
 const _dateTypeTagger = type => {
   return (acc, date) => {
@@ -28,7 +29,7 @@ const _stateFromStartAndEndDates = (startDate, exitDate) => {
   return merged
 }
 
-const initialState = _stateFromStartAndEndDates(defaultStartDate, defaultExpectedExitDate)
+const initialState = _stateFromStartAndEndDates(defaultFormInputs.startDate, defaultFormInputs.exitDate)
 
 export default (state = initialState, action) => {
   switch (action.type) {

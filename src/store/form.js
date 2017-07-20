@@ -1,16 +1,18 @@
 import {
-  defaultStartDate,
-  defaultExpectedExitDate,
+  expectedExitDate,
   momentDayOnly,
+  nextStartDate,
 } from '@learnersguild/guild-dates'
 
 import {
   LIVING_FUND_STIPEND_AMOUNT,
 } from '../isacalc'
 
+const defaultStartDate = nextStartDate()
+
 export const defaultFormInputs = {
   startDate: defaultStartDate.toISOString(),
-  exitDate: defaultExpectedExitDate.toISOString(),
+  exitDate: expectedExitDate(defaultStartDate).toISOString(),
   stipendAmount: LIVING_FUND_STIPEND_AMOUNT,
   isTakingLaptopStipend: true,
   expectedAnnualSalary: 90000,
