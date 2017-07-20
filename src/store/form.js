@@ -11,8 +11,8 @@ import {
 const defaultStartDate = nextStartDate()
 
 export const defaultFormInputs = {
-  startDate: defaultStartDate.toISOString(),
-  exitDate: expectedExitDate(defaultStartDate).toISOString(),
+  startDate: momentDayOnly(defaultStartDate).format('YYYY-MM-DD'),
+  exitDate: momentDayOnly(expectedExitDate(defaultStartDate)).format('YYYY-MM-DD'),
   stipendAmount: LIVING_FUND_STIPEND_AMOUNT,
   isTakingLaptopStipend: true,
   expectedAnnualSalary: 90000,
@@ -65,7 +65,7 @@ export const updateForm = formData => (dispatch, getState) => {
   // half a second before dispatching the RECALCULATE action
   clearTimeout(form.recalculateTimer)
   const recalculateTimer = setTimeout(() => {
-    dispatch({...formData, recalculateTimer: null, type: actionTypes.RECALCULATE})
+    dispatch({...getState().form, recalculateTimer: null, type: actionTypes.RECALCULATE})
   }, 500)
 
   // update the form values immediately

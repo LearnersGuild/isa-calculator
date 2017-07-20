@@ -19,7 +19,8 @@ import {
 
 const totalStipendReceived = (stipendAmount, isTakingLaptopStipend) => {
   const laptopStipendReceived = isTakingLaptopStipend ? LAPTOP_STIPEND_AMOUNT : 0
-  return stipendAmount + laptopStipendReceived
+  const received = stipendAmount + laptopStipendReceived
+  return received
 }
 
 const programISAMonthlyPayment = (expectedAnnualSalary, programISAPercentage) => {
