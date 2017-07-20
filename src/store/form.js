@@ -4,11 +4,15 @@ import {
   defaultExpectedExitDate,
 } from '@learnersguild/guild-dates'
 
+import {
+  LIVING_FUND_STIPEND_AMOUNT,
+} from '../isacalc'
+
 const initialState = {
   startDate: defaultStartDate.toISOString(),
   exitDate: defaultExpectedExitDate.toISOString(),
-  stipendAmount: 0,
-  isTakingLaptopStipend: false,
+  stipendAmount: LIVING_FUND_STIPEND_AMOUNT,
+  isTakingLaptopStipend: true,
   expectedAnnualSalary: 90000,
 }
 
@@ -36,24 +40,28 @@ export const reducer = (state = initialState, action) => {
   }
 }
 
-export const updateStartDate = startDate => dispatch => {
+export const updateStartDate = startDate => (dispatch, getState) => {
   dispatch({type: actionTypes.UPDATE_START_DATE, startDate})
   const exitDate = expectedExitDate(startDate).toISOString()
-  dispatch({type: actionTypes.UPDATE_EXIT_DATE, startDate, exitDate})
+  dispatch({type: actionTypes.UPDATE_EXIT_DATE, ...getState().form, startDate, exitDate})
 }
-export const updateExitDate = exitDate => dispatch => dispatch({
+export const updateExitDate = exitDate => (dispatch, getState) => dispatch({
   type: actionTypes.UPDATE_EXIT_DATE,
+  ...getState().form,
   exitDate,
 })
-export const updateStipendAmount = stipendAmount => dispatch => dispatch({
+export const updateStipendAmount = stipendAmount => (dispatch, getState) => dispatch({
   type: actionTypes.UPDATE_STIPEND_AMOUNT,
-  stipendAmount,
+  ...getState().form,
+  stipendAmount: Number(stipendAmount),
 })
-export const updateIsTakingLaptopStipend = isTakingLaptopStipend => dispatch => dispatch({
+export const updateIsTakingLaptopStipend = isTakingLaptopStipend => (dispatch, getState) => dispatch({
   type: actionTypes.UPDATE_IS_TAKING_LAPTOP_STIPEND,
+  ...getState().form,
   isTakingLaptopStipend,
 })
-export const updateExpectedAnnualSalary = expectedAnnualSalary => dispatch => dispatch({
+export const updateExpectedAnnualSalary = expectedAnnualSalary => (dispatch, getState) => dispatch({
   type: actionTypes.UPDATE_EXPECTED_ANNUAL_SALARY,
-  expectedAnnualSalary,
+  ...getState().form,
+  expectedAnnualSalary: Number(expectedAnnualSalary),
 })
