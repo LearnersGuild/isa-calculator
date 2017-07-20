@@ -20,7 +20,8 @@ export const _isaSessionCompletionPercentage = (startDate, exitDate, sessionInde
   const sessionStart = momentDayOnly(isaSessionStartDate(startDate, sessionIndex))
   const exit = momentDayOnly(exitDate)
   const numSessionDays = numDaysInISASession(startDate, sessionIndex)
-  const numCompletedDays = Math.min(openDaysBetween(sessionStart, exit).length, numSessionDays)
+  const completedDays = openDaysBetween(sessionStart, exit)
+  const numCompletedDays = Math.min(completedDays.length, numSessionDays)
   return numCompletedDays / numSessionDays
 }
 
