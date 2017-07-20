@@ -21,13 +21,11 @@ export const _isaSessionCompletionPercentage = (startDate, exitDate, sessionInde
   const exit = momentDayOnly(exitDate)
   const numSessionDays = numDaysInISASession(startDate, sessionIndex)
   const numCompletedDays = Math.min(openDaysBetween(sessionStart, exit).length, numSessionDays)
-  console.log({sessionStart, exit, numSessionDays, numCompletedDays})
   return numCompletedDays / numSessionDays
 }
 
 export const isaSessionISAPercentage = (startDate, exitDate, sessionIndex) => {
   const completionPct = _isaSessionCompletionPercentage(startDate, exitDate, sessionIndex)
-  console.log({completionPct})
   if (completionPct >= SESSION_COMPLETION_THRESHOLD_PERCENTAGE) {
     return SESSION_ISA_MAX_PERCENTAGE
   }

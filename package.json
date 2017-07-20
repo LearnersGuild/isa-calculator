@@ -1,12 +1,12 @@
 {
   "name": "isa-calculator",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "engines": {
     "node": "7.7.4"
   },
   "scripts": {
     "dev": "node src/server",
-    "build:icons": "mkdir -p src/static && curl -s https://brand.learnersguild.org/icontags > src/static/icons-metadata.js",
+    "build:icons": "mkdir -p src/static && curl -s https://brand.learnersguild.org/icontags > src/static/icons-metadata.json",
     "build:next": "./node_modules/.bin/next build src",
     "build:theme": "./node_modules/.bin/react-toolbox-themr",
     "build": "npm run build:icons && npm run build:theme && npm run build:next",
