@@ -1,6 +1,7 @@
 import {
   defaultStartDate,
   defaultExpectedExitDate,
+  momentDayOnly,
 } from '@learnersguild/guild-dates'
 
 import {
@@ -39,8 +40,8 @@ export const reducer = (state = initialState, action) => {
     case actionTypes.UPDATE_FORM:
       return {
         ...state,
-        startDate: new Date(startDate).toISOString(),
-        exitDate: new Date(exitDate).toISOString(),
+        startDate: momentDayOnly(startDate).toISOString(),
+        exitDate: momentDayOnly(exitDate).toISOString(),
         stipendAmount: Number(stipendAmount),
         isTakingLaptopStipend,
         expectedAnnualSalary: Number(expectedAnnualSalary),

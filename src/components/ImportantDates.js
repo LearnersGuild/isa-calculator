@@ -7,7 +7,10 @@ import CardTitle from 'react-toolbox/lib/card/CardTitle'
 import List from 'react-toolbox/lib/list/List'
 import ListItem from 'react-toolbox/lib/list/ListItem'
 
-import {formatDate} from '@learnersguild/guild-dates'
+import {
+  formatDate,
+  momentDayOnly,
+} from '@learnersguild/guild-dates'
 
 import cardStyle from './cardStyle'
 
@@ -33,10 +36,10 @@ class ImportantDates extends Component {
       .reduce((keys, currDateStr, i) => {
         const prevDateStr = sortedDates[i - 1]
         const prevType = i === 0 ? null : importantDates[prevDateStr]
-        const prevDate = i === 0 ? new Date('1970-01-01') : new Date(prevDateStr)
+        const prevDate = i === 0 ? momentDayOnly('1970-01-01') : momentDayOnly(prevDateStr)
         const currType = importantDates[currDateStr]
-        const currDate = new Date(currDateStr)
-        const diffMillis = currDate.getTime() - prevDate.getTime()
+        const currDate = momentDayOnly(currDateStr)
+        const diffMillis = currDate.valueOf() - prevDate.valueOf()
         if (diffMillis <= DAY_MILLIS && prevType === currType) {
           keys[keys.length - 1].end = currDateStr
         } else {

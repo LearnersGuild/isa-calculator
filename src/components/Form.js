@@ -10,7 +10,10 @@ import DatePicker from 'react-toolbox/lib/date_picker/DatePicker'
 import Input from 'react-toolbox/lib/input/Input'
 import Switch from 'react-toolbox/lib/switch/Switch'
 
-import {formatDate} from '@learnersguild/guild-dates'
+import {
+  formatDate,
+  momentDayOnly,
+} from '@learnersguild/guild-dates'
 
 import {updateForm} from '../store/form'
 
@@ -27,8 +30,8 @@ class Form extends Component {
       onUpdate,
     } = this.props
 
-    const startDate = new Date(startDateStr)
-    const exitDate = new Date(exitDateStr)
+    const startDate = momentDayOnly(startDateStr)
+    const exitDate = momentDayOnly(exitDateStr)
 
     const handleUpdate = name => value => {
       onUpdate({
@@ -50,7 +53,7 @@ class Form extends Component {
             label="Start Date"
             onChange={handleUpdate('startDate')}
             inputFormat={formatDate}
-            value={startDate}
+            value={startDate.toDate()}
             required
           />
           <DatePicker
@@ -58,7 +61,7 @@ class Form extends Component {
             label="Exit Date"
             onChange={handleUpdate('exitDate')}
             inputFormat={formatDate}
-            value={exitDate}
+            value={exitDate.toDate()}
             required
           />
           <Input
