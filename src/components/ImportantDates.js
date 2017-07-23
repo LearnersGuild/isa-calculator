@@ -49,18 +49,19 @@ class ImportantDates extends Component {
       }, [])
       .map((dateInfo, i) => {
         const {start, end, type} = dateInfo
-        const caption = start === end ?
+        const formatted = start === end ?
           formatDate(start) :
           `${formatDate(start)} — ${formatDate(end)}`
+        const caption = <span style={{color: 'black'}}>{formatted}</span>
         return (
-          <ListItem key={i} leftIcon={iconForType(type)} caption={caption}/>
+          <ListItem key={i} leftIcon={iconForType(type)} ripple={false}>{caption}</ListItem>
         )
       })
   }
 
   render() {
     return (
-      <Card style={cardStyle}>
+      <Card style={cardStyle()}>
         <CardTitle title="Important Dates"/>
         <List>
           {this.renderDates()}

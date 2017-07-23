@@ -31,83 +31,89 @@ class Calculations extends Component {
 
     const exitDate = expectedExitDateStr ? formatDate(expectedExitDateStr) : ''
     const cancellationDate = isaCancellationDateStr ? formatDate(isaCancellationDateStr) : ''
-    const inputStyle = {color: 'black'}
+    const inputTheme = {inputElement: 'inputBlack'}
 
     return (
-      <Card style={cardStyle}>
+      <Card style={cardStyle()}>
         <CardTitle title="ISA Details"/>
         <CardText>
           <Input
-            style={inputStyle}
+            theme={inputTheme}
             icon="event"
             label="Expected Exit Date"
             value={exitDate}
             disabled
           />
           <Input
-            style={inputStyle}
+            theme={inputTheme}
             icon="event"
             label="ISA Cancellation Date"
             value={cancellationDate}
             disabled
           />
           <Input
-            style={inputStyle}
+            theme={inputTheme}
             icon="navigate_next"
             label="Pay it Forward ISA %"
             value={formatPercent(programISAPercentage)}
             disabled
           />
           <Input
-            style={inputStyle}
+            theme={inputTheme}
             icon="attach_money"
             label="Pay it Forward ISA Monthly Payment"
             value={formatMoney(programISAMonthlyPayment)}
             disabled
           />
           <Input
-            style={inputStyle}
+            theme={inputTheme}
             icon="attach_money"
             label="Pay it Forward ISA Payment Cap"
             value={formatMoney(programISAPaymentCap)}
             disabled
           />
           <Input
-            style={inputStyle}
+            theme={inputTheme}
             icon="attach_money"
             label="Pay it Forward ISA Rebate Amount"
             value={formatMoney(programISARebateAmount)}
             disabled
           />
           <Input
-            style={inputStyle}
+            theme={inputTheme}
             icon="attach_money"
             label="Total Stipend Received"
             value={formatMoney(stipendReceived)}
             disabled
           />
           <Input
-            style={inputStyle}
+            theme={inputTheme}
             icon="navigate_next"
             label="Living Fund ISA %"
             value={formatPercent(livingFundISAPercentage)}
             disabled
           />
           <Input
-            style={inputStyle}
+            theme={inputTheme}
             icon="attach_money"
             label="Living Fund ISA Monthly Payment"
             value={formatMoney(livingFundISAMonthlyPayment)}
             disabled
           />
           <Input
-            style={inputStyle}
+            theme={inputTheme}
             icon="attach_money"
             label="Living Fund ISA Payment Cap"
             value={formatMoney(livingFundISAPaymentCap)}
             disabled
           />
         </CardText>
+        <style jsx global>{`
+          .inputBlack {
+            color: black !important;
+            opacity: 1
+          }
+        `}</style>
       </Card>
     )
   }

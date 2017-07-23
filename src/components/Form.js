@@ -45,7 +45,7 @@ class Form extends Component {
     }
 
     return (
-      <Card style={cardStyle}>
+      <Card style={cardStyle()}>
         <CardTitle title="Learner Details"/>
         <CardText>
           <DatePicker
