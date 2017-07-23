@@ -22,6 +22,7 @@ class Calculations extends Component {
       programISAPercentage,
       programISAMonthlyPayment,
       programISAPaymentCap,
+      programISARebateAmount,
       stipendReceived,
       livingFundISAPercentage,
       livingFundISAMonthlyPayment,
@@ -74,6 +75,13 @@ class Calculations extends Component {
           <Input
             style={inputStyle}
             icon="attach_money"
+            label="Pay it Forward ISA Rebate Amount"
+            value={formatMoney(programISARebateAmount)}
+            disabled
+          />
+          <Input
+            style={inputStyle}
+            icon="attach_money"
             label="Total Stipend Received"
             value={formatMoney(stipendReceived)}
             disabled
@@ -111,6 +119,7 @@ Calculations.propTypes = {
   programISAPercentage: PropTypes.number.isRequired,
   programISAMonthlyPayment: PropTypes.number.isRequired,
   programISAPaymentCap: PropTypes.number.isRequired,
+  programISARebateAmount: PropTypes.number.isRequired,
   stipendReceived: PropTypes.number.isRequired,
   livingFundISAPercentage: PropTypes.number.isRequired,
   livingFundISAMonthlyPayment: PropTypes.number.isRequired,
@@ -124,6 +133,7 @@ const mapStateToProps = ({
     programISAPercentage,
     programISAMonthlyPayment,
     programISAPaymentCap,
+    programISARebateAmount,
     stipendReceived,
     livingFundISAPercentage,
     livingFundISAMonthlyPayment,
@@ -135,6 +145,7 @@ const mapStateToProps = ({
   programISAPercentage,
   programISAMonthlyPayment,
   programISAPaymentCap,
+  programISARebateAmount,
   stipendReceived,
   livingFundISAPercentage,
   livingFundISAMonthlyPayment,

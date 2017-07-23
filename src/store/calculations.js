@@ -8,6 +8,7 @@ import {
   isaLivingFundPaymentCap,
   isaProgramISAPercentage,
   isaProgramPaymentCap,
+  isaProgramRebateAmount,
   LAPTOP_STIPEND_AMOUNT,
   LIVING_FUND_STIPEND_AMOUNT,
 } from '../isacalc'
@@ -41,6 +42,7 @@ const initialState = {
   programISAPercentage,
   programISAMonthlyPayment: programISAMonthlyPayment(defaultFormInputs.expectedAnnualSalary, programISAPercentage),
   programISAPaymentCap: isaProgramPaymentCap(defaultFormInputs.startDate, defaultFormInputs.exitDate),
+  programISARebateAmount: isaProgramRebateAmount(defaultFormInputs.startDate, defaultFormInputs.exitDate),
   stipendReceived,
   livingFundISAPercentage,
   livingFundISAMonthlyPayment: livingFundISAMonthlyPayment(defaultFormInputs.expectedAnnualSalary, livingFundISAPercentage),
@@ -68,6 +70,7 @@ export default (state = initialState, action) => {
         programISAPercentage,
         programISAMonthlyPayment: programISAMonthlyPayment(expectedAnnualSalary, programISAPercentage),
         programISAPaymentCap: isaProgramPaymentCap(startDate, exitDate),
+        programISARebateAmount: isaProgramRebateAmount(startDate, exitDate),
         stipendReceived,
         livingFundISAPercentage,
         livingFundISAMonthlyPayment: livingFundISAMonthlyPayment(expectedAnnualSalary, livingFundISAPercentage),
