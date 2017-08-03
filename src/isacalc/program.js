@@ -59,7 +59,7 @@ export const isaProgramFundingAmount = (startDate, exitDate) => {
     .reduce((sum, sessionCost) => sum + sessionCost, 0)
 }
 
-export const isaProgramPaymentCap = (startDate, exitDate) => 2 * isaProgramFundingAmount(startDate, exitDate)
+export const isaProgramPaymentCap = (startDate, exitDate) => (2 * isaProgramFundingAmount(startDate, exitDate))
 
 export const isaProgramRebateAmount = (startDate, exitDate) => {
   const finalSessionIndex = ISA_NUM_SESSIONS - 1
