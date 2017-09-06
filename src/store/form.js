@@ -10,9 +10,12 @@ import {
 
 const defaultStartDate = nextStartDate()
 
+// server and browser timezones might differ, so we'll be safe by serializing to date-only strings
+const dateOnlyString = date => momentDayOnly(date).format('YYYY-MM-DD')
+
 export const defaultFormInputs = {
-  startDate: momentDayOnly(defaultStartDate).format('YYYY-MM-DD'),
-  exitDate: momentDayOnly(expectedExitDate(defaultStartDate)).format('YYYY-MM-DD'),
+  startDate: dateOnlyString(defaultStartDate),
+  exitDate: dateOnlyString(expectedExitDate(defaultStartDate)),
   stipendAmount: LIVING_FUND_STIPEND_AMOUNT,
   isTakingLaptopStipend: true,
   expectedAnnualSalary: 90000,
@@ -42,8 +45,8 @@ export const reducer = (state = initialState, action) => {
     case actionTypes.UPDATE_FORM:
       return {
         ...state,
-        startDate: momentDayOnly(startDate).toISOString(),
-        exitDate: momentDayOnly(exitDate).toISOString(),
+        startDate: dateOnlyString(startDate),
+        exitDate: dateOnlyString(exitDate),
         stipendAmount: Number(stipendAmount),
         isTakingLaptopStipend,
         expectedAnnualSalary: Number(expectedAnnualSalary),

@@ -12,12 +12,19 @@ import Switch from 'react-toolbox/lib/switch/Switch'
 
 import {
   formatDate,
-  momentDayOnly,
 } from '@learnersguild/guild-dates'
 
 import {updateForm} from '../store/form'
 
 import cardStyle from './cardStyle'
+
+// react-toolbox's DatePicker assumes _local_ timezone, but guild-dates assumes
+// UTC, so we need to do this conversion to make things behave properly
+const dayOnlyDate = str => {
+  const d = new Date(str)
+  d.setMinutes(d.getTimezoneOffset())
+  return d
+}
 
 class Form extends Component {
   render() {
@@ -30,8 +37,8 @@ class Form extends Component {
       onUpdate,
     } = this.props
 
-    const startDate = momentDayOnly(startDateStr)
-    const exitDate = momentDayOnly(exitDateStr)
+    const startDate = dayOnlyDate(startDateStr)
+    const exitDate = dayOnlyDate(exitDateStr)
 
     const handleUpdate = name => value => {
       onUpdate({
@@ -53,7 +60,7 @@ class Form extends Component {
             label="Start Date"
             onChange={handleUpdate('startDate')}
             inputFormat={formatDate}
-            value={startDate.toDate()}
+            value={startDate}
             required
           />
           <DatePicker
@@ -61,7 +68,7 @@ class Form extends Component {
             label="Exit Date"
             onChange={handleUpdate('exitDate')}
             inputFormat={formatDate}
-            value={exitDate.toDate()}
+            value={exitDate}
             required
           />
           <Input
