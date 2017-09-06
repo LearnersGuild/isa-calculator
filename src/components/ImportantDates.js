@@ -21,6 +21,9 @@ const iconForType = type => {
   if (type === 'stipendPayment') {
     return 'attach_money'
   }
+  if (type === 'isaSessionStart') {
+    return 'today'
+  }
   return 'event'
 }
 
