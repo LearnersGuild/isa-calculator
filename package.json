@@ -2,7 +2,8 @@
   "name": "isa-calculator",
   "version": "0.2.2",
   "engines": {
-    "node": "8.2"
+    "node": "8.2",
+    "npm": "5.3"
   },
   "scripts": {
     "dev": "node src/server",
