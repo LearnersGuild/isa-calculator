@@ -1,6 +1,7 @@
 import {
   closedDaysBetween,
   stipendPaymentDatesBetween,
+  isaSessionStartDates as isaSessionStartDatesFrom,
 } from '@learnersguild/guild-dates'
 
 import {
@@ -20,10 +21,13 @@ const _stateFromStartAndEndDates = (startDate, exitDate) => {
     .reduce(_dateTypeTagger('holiday'), {})
   const stipendPaymentDates = stipendPaymentDatesBetween(startDate, exitDate)
     .reduce(_dateTypeTagger('stipendPayment'), {})
+  const isaSessionStartDates = isaSessionStartDatesFrom(startDate)
+    .reduce(_dateTypeTagger('isaSessionStart'), {})
 
   const merged = {
     ...closedDays,
     ...stipendPaymentDates,
+    ...isaSessionStartDates,
   }
 
   return merged
